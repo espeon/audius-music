@@ -1,8 +1,9 @@
 module.exports = {
     name: 'stop',
-    description: 'Stop! Hammer Time!',
+    description: 'Stops the music and clears the queue!',
+    aliases: ['clear'],
     execute(bot, msg, args, serverQueue) {
-        if (!msg.member.voice.channel) {
+        if (!msg.member.voiceChannel) {
            return msg.channel.send(`Please join a voice channel first.`) 
         }
         if (!serverQueue){

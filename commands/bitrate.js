@@ -1,8 +1,9 @@
 module.exports = {
     name: 'bitrate',
     description: 'Gets the current bitrate!',
+    aliases: ['br'],
     execute(bot, msg, args, serverQueue) {
-        if (!msg.member.voice.channel) {
+        if (!msg.member.voiceChannel) {
           return msg.channel.send(`You are not in a voice channel!`)  
         }
         if (!serverQueue) {

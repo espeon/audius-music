@@ -2,9 +2,9 @@ module.exports = {
     name: 'volume',
     description: 'Changes the volume!',
     execute(bot, msg, args, serverQueue) {
-        if (!msg.member.voice.channel) {
-            return msg.channel.send(`You are not in a voice channel!`)
-        }
+        if (!msg.member.voiceChannel) {
+            return msg.channel.send(`Please join a voice channel first.`) 
+         }
         if (!serverQueue) {
             return msg.channel.send(`There is nothing playing.`)
         }

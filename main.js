@@ -1,7 +1,7 @@
 const Discord = require('discord.js')
-const YouTube = require("simple-youtube-api")
-const ytdl = require("ytdl-core")
-const ydl = require("youtube-dl")
+const YouTube = require(`simple-youtube-api`)
+const ytdl = require(`ytdl-core`)
+const ydl = require(`youtube-dl`)
 const fs = require('fs') // For reading command files - Bass
 let m // Message placeholder - Bass
 const bot = new Discord.Client({ disableEveryone: true })
@@ -16,30 +16,36 @@ for (const file of commandFiles) {                // for each file in commandFil
   bot.commands.set(command.name, command)         // ...and add to list of commands
 }
 
-let id = "id-001"
-let title = "NGGYU"
-let murl = "https://youtube.com"
-let streamlink = "https://audius.co/this-is/a-link-1332"
+let id = `id-001`
+let title = `NGGYU`
+let murl = `https://youtube.com`
+let streamlink = `https://audius.co/this-is/a-link-1332`
 let bitrate = 320
 
 const queue = new Map()
 
-bot.on("warn", console.warn)
+bot.on(`warn`, console.warn)
+bot.on(`error`, console.error)
 
-bot.on("error", console.error)
-
-bot.on("ready", () => {
+bot.on(`ready`, () => {
   console.log(`Online and ready to DJ! Prefix is ${prefix}`)
 })
 
-bot.on("message", async msg => {
+bot.on(`voiceStateUpdate`, member => { // Makes sure the bot leaves the vc
+  let vc = member.voiceChannel
+
+  if (vc.members.length == 0) {
+    vc.leave()
+  }
+})
+bot.on(`message`, async msg => {
   m = msg // Used for errors
 
   // eslint-disable-line
   if (!msg.content.startsWith(prefix) || msg.author.bot) {
     return // No need for `return undefined` - Bass
   }
-  // if (msg.channel.type === "dm") return undefined
+  // if (msg.channel.type === `dm`) return undefined
   // Might have no need for this, my bot doesn't respond to DMs anyways - Bass
 
   function parseArgs (argString, argCount, allowSingleQuote = true) {
@@ -61,22 +67,24 @@ bot.on("message", async msg => {
   }
 
   const args = parseArgs(msg.content.slice(prefix.length)) // slices the prefix from the command
-  const command = args.shift().toLowerCase() /* make the command lowercase 
+  const commandName = args.shift().toLowerCase() /* make the command lowercase 
                                                 EXAMPLE: let string = 'ArE yoU MoCkInG Me?'
                                                 let lowerString = string.shift().toLowerCase()
                                                 // lowerString is 'are you mocking me?' 
                                                 - Bass
                                                 */
-  const searchString = args.join(" ")
-  const url = args[1] ? args[1].replace(/<(.+)>/g, "$1") : ""
+  const searchString = args.join(` `)
+  const url = args[1] ? args[1].replace(/<(.+)>/g, `$1`) : ``
   const serverQueue = queue.get(msg.guild.id)
 
-  if (!bot.commands.has(command)) { // if the bot doesnt have the command specified...
+  const command = bot.commands.get(commandName) || bot.commands.find(cmd => cmd.aliases && cmd.aliases.includes(commandName))
+
+  if (!command) { // if the bot doesnt have the command specified...
     msg.reply(`I don't have that command, did you mean to use another bot?`) // ...tell the user...
-    return // ...and exit - Bas
+    return // ...and exit - Bass
   }
   try {
-    bot.commands.get(command).execute(bot, msg, args, serverQueue)
+    command.execute(bot, msg, args, serverQueue, youtube)
   }
   // The try block above tries to execute a command. If it fails for whatever reason, it throws a error that the 
   // catch block below grabs (thats why its called a "catch" block) and does something with the error. - Bass
@@ -84,35 +92,6 @@ bot.on("message", async msg => {
     console.error(error)
     msg.reply(`There was an error trying to execute that command! \nError: \`\`\`css\n' ${Error(error)}\`\`\``)
   }
-if (command === "queue" || command === "q") {
-    if (!serverQueue) return msg.channel.send("There is nothing playing.")
-    return msg.channel.send({
-      embed: {
-        title: `Queue:`,
-        description: `${serverQueue.songs
-          .map(song => `**-** [${song.title}](${song.link})`)
-          .join("\n")}\n**Now playing: **[${
-          serverQueue.songs[0].title
-        }](serverQueue.songs[0].link)`
-      }
-    })
-  } else if (command === "pause") {
-    if (serverQueue && serverQueue.playing) {
-      serverQueue.playing = false
-      serverQueue.connection.dispatcher.pause()
-      return msg.channel.send("okie! music has been paused.")
-    }
-    return msg.channel.send("There is nothing playing.")
-  } else if (command === "resume") {
-    if (serverQueue && !serverQueue.playing) {
-      serverQueue.playing = true
-      serverQueue.connection.dispatcher.resume()
-      return msg.channel.send("i've resumed the music")
-    }
-    return msg.channel.send("There is nothing playing.")
-  }
-
-  return undefined
 })
 
 function play(guild, song) {
@@ -121,61 +100,61 @@ function play(guild, song) {
   if (!song) {
     serverQueue.voiceChannel.leave()
     serverQueue.textChannel.send(
-      "i've left as there's nothing in queue. to add me back in, just queue something up!"
+      `i've left as there's nothing in queue. to add me back in, just queue something up!`
     )
     queue.delete(guild.id)
-    bot.user.setActivity("some hot tunes", { type: "LISTENING" })
+    bot.user.setActivity(`some hot tunes`, { type: `LISTENING` })
     return
   }
   console.log(serverQueue.songs)
   console.log(song.url)
-  if (song.url.includes("youtube")) {
+  if (song.url.includes(`youtube`)) {
     const dispatcher = serverQueue.connection
       .play(ytdl(song.url), {
         volume: 0.5,
         bitrate: serverQueue.bitrate,
         passes: 10
       })
-      .on("end", reason => {
-        if (reason === "Stream is not generating quickly enough.")
-          console.log("Song ended.")
+      .on(`end`, reason => {
+        if (reason === `Stream is not generating quickly enough.`)
+          console.log(`Song ended.`)
         else console.log(reason)
         serverQueue.songs.shift()
         play(guild, serverQueue.songs[0])
       })
-      .on("error", error => console.error(error))
+      .on(`error`, error => console.error(error))
     dispatcher.setVolumeLogarithmic(serverQueue.volume / 100)
-  } else if (song.url.includes("sndcdn")) {
+  } else if (song.url.includes(`sndcdn`)) {
     const dispatcher = serverQueue.connection
       .play(song.url, {
         volume: 0.5,
         bitrate: serverQueue.bitrate,
         passes: 10
       })
-      .on("end", reason => {
-        if (reason === "Stream is not generating quickly enough.")
-          console.log("Song ended.")
+      .on(`end`, reason => {
+        if (reason === `Stream is not generating quickly enough.`)
+          console.log(`Song ended.`)
         else console.log(reason)
         serverQueue.songs.shift()
         play(guild, serverQueue.songs[0])
       })
-      .on("error", error => console.error(error))
+      .on(`error`, error => console.error(error))
     dispatcher.setVolumeLogarithmic(serverQueue.volume / 100)
-  } else if (song.url.includes("audius")) {
+  } else if (song.url.includes(`audius`)) {
     const dispatcher = serverQueue.connection
       .play(song.url, {
         volume: 0.5,
         bitrate: serverQueue.bitrate,
         passes: 10
       })
-      .on("end", reason => {
-        if (reason === "Stream is not generating quickly enough.")
-          console.log("Song ended.")
+      .on(`end`, reason => {
+        if (reason === `Stream is not generating quickly enough.`)
+          console.log(`Song ended.`)
         else console.log(reason)
         serverQueue.songs.shift()
         play(guild, serverQueue.songs[0])
       })
-      .on("error", error => console.error(error))
+      .on(`error`, error => console.error(error))
     dispatcher.setVolumeLogarithmic(serverQueue.volume / 100)
   }
   serverQueue.textChannel.send(`Now playing **${song.title}**`)

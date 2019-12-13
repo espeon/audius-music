@@ -6,7 +6,7 @@ module.exports = {
         const axios = require('axios')
         const request = require("request")
 
-        const voiceChannel = msg.member.voice.channel
+        const voiceChannel = msg.member.voiceChannel
 
         if (!voiceChannel) {
             return msg.channel.reply(`connecting to the vc you're in-\nwait... you aren't in one!`)
