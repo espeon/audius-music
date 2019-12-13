@@ -31,10 +31,10 @@ bot.on(`ready`, () => {
   console.log(`Online and ready to DJ! Prefix is ${prefix}`)
 })
 
-bot.on(`voiceStateUpdate`, member => { // Makes sure the bot leaves the vc
+bot.on(`voiceStateUpdate`, (n, member) => { // Makes sure the bot leaves the vc
   let vc = member.voiceChannel
 
-  if (vc.members.length == 0) {
+  if (vc.members == 0) {
     vc.leave()
   }
 })
@@ -84,7 +84,7 @@ bot.on(`message`, async msg => {
     return // ...and exit - Bass
   }
   try {
-    command.execute(bot, msg, args, serverQueue, youtube)
+    command.execute(bot, msg, args, serverQueue, youtube, queue)
   }
   // The try block above tries to execute a command. If it fails for whatever reason, it throws a error that the 
   // catch block below grabs (thats why its called a "catch" block) and does something with the error. - Bass

@@ -1,15 +1,22 @@
 module.exports = {
     name: 'play',
     description: 'Play a song in VC!',
-    async execute(bot, msg, args, serverQueue, youtube) {
+    async execute(bot, msg, args, serverQueue, youtube, queue) {
         const handleVideo = require('../functions/handleVideo')
         const axios = require('axios')
         const request = require("request")
 
+        let url = args[0]
+
+        if (!url) {
+            return msg.reply(`I need a url to play!`)
+        }
+
         const voiceChannel = msg.member.voiceChannel
+        console.log(msg.member)
 
         if (!voiceChannel) {
-            return msg.channel.reply(`connecting to the vc you're in-\nwait... you aren't in one!`)
+            return msg.reply(`connecting to the vc you're in-\nwait... you aren't in one!`)
         }
 
         const permissions = voiceChannel.permissionsFor(msg.client.user)
@@ -25,7 +32,7 @@ module.exports = {
         const videos = await playlist.getVideos()
         for (const video of Object.values(videos)) {
             const video2 = await youtube.getVideoByID(video.id) // eslint-disable-line no-await-in-loop
-            await handleVideo(video2, msg, voiceChannel, true) // eslint-disable-line no-await-in-loop
+            await handleVideo(video2, msg, voiceChannel, true, queue) // eslint-disable-line no-await-in-loop
         }
         return msg.channel.send(
             `✅ Playlist: **${playlist.title}** has been added to the queue!`
@@ -108,7 +115,7 @@ module.exports = {
                     json: true
                     }
                     console.log(slug)
-                    request(options, function(error, response, body) { // I don't even know how to switch this to axios - Bass
+                    request(options, async function(error, response, body) { // I don't even know how to switch this to axios - Bass
                     if (body.success != true) {
                         console.log(body.success)
                         return msg.channel.send("This may not be a valid Audius link.")
@@ -118,7 +125,7 @@ module.exports = {
                     title = soundcloud.data[0].title
                     murl = `https://kanbot-api.glitch.me/api/audius/generate.m3u8?id=${id}&title=${slug}&handle=${username}`
                     streamlink = link
-                    return await handleVideo(murl, msg, voiceChannel)
+                    return await handleVideo(murl, msg, voiceChannel, false, queue)
                     })
                 } else {
                     let video = await youtube.getVideo(url)

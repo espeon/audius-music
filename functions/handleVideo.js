@@ -1,6 +1,6 @@
 module.exports = handleVideo
 
-async function handleVideo(video, msg, voiceChannel, playlist = false) {
+function handleVideo(video, msg, voiceChannel, playlist = false, queue) {
     const serverQueue = queue.get(msg.guild.id)
     const song = {
       id: id,
@@ -23,9 +23,12 @@ async function handleVideo(video, msg, voiceChannel, playlist = false) {
       queueConstruct.songs.push(song)
   
       try {
-        let connection = await voiceChannel.join()
-        queueConstruct.connection = connection
-        play(msg.guild, queueConstruct.songs[0])
+        let connection = voiceChannel.join()
+        .then(() => {
+          queueConstruct.connection = connection
+          play(msg.guild, queueConstruct.songs[0])
+        })
+        
       } catch (error) {
         console.error(`I could not join the voice channel: ${error}`)
         queue.delete(msg.guild.id)
