@@ -34,7 +34,7 @@ bot.on(`ready`, () => {
 bot.on(`voiceStateUpdate`, (n, member) => { // Makes sure the bot leaves the vc
   let vc = member.voiceChannel
 
-  if (vc.members == 0) {
+  if (vc.members.array().length == 0) {
     vc.leave()
   }
 })
@@ -168,7 +168,7 @@ process.on('unhandledRejection', function(error) {
 
 process.on('uncaughtException', function (err) {
   console.log(`Caught exception: ${err}`)
-  m.reply(`Fatal error, please alert an Audius staff member about this!`)
+  //m.reply(`Fatal error, please alert an Audius staff member about this!`)
   bot.destroy()
 })
 // ^ These are dangerous, if yall want yall can add logging to files so yall can see what went wrong
