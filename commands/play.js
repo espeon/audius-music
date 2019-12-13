@@ -1,7 +1,7 @@
 module.exports = {
     name: 'play',
     description: 'Play a song in VC!',
-    async execute(bot, msg, args, serverQueue) {
+    async execute(bot, msg, args, serverQueue, youtube) {
         const handleVideo = require('../functions/handleVideo')
         const axios = require('axios')
         const request = require("request")

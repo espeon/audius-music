@@ -4,7 +4,7 @@ module.exports = {
     execute(bot, msg, args, serverQueue) {
         if (!msg.member.voiceChannel) {
             return msg.channel.send(`Please join a voice channel first.`) 
-         }
+        }
         if (!serverQueue) {
             return msg.channel.send(`There is nothing playing.`)
         }
