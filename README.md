@@ -1,8 +1,9 @@
 # audius-music
 a music bot for the Audius discord server
+
 add it here: https://discordapp.com/oauth2/authorize?scope=bot&permissions=66440512&client_id=653410619587821568
 
-## commands
+### commands
 
 m!play
  (Plays new song and autojoins if used.) - Usage: m!play [audius/soundcloud link/ search term])
