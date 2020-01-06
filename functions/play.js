@@ -1,19 +1,17 @@
 module.exports = play
-
-async function play(guild, song, bot) {
+const handleVideo = require("../functions/handleVideo");
+async function play(guild, songe, bot) {
   const ytdl = require("ytdl-core")
+  const leaveVC = require("../functions/leaveVC")
   const serverQueue = global.queue.get(guild.id)
 
-  if (!song) {
-    serverQueue.voiceChannel.leave()
-    serverQueue.textChannel.send(
-      "i've left as there's nothing in queue. to add me back in, just queue something up!"
-    )
-    global.queue.delete(guild.id)
+  if (!songe) {
+    leaveVC(serverQueue, guild, true)
     return
   }
-  console.log(serverQueue.songs)
-  console.log(song.url)
+  let song = serverQueue.songs[0]
+  console.log(serverQueue.songs[0])
+  console.log(song)
   if (song.url.includes("youtube")) {
     const dispatcher = serverQueue.connection
       .play(ytdl(song.url), {
@@ -51,7 +49,7 @@ async function play(guild, song, bot) {
       .play(song.url, {
         volume: 0.5,
         bitrate: serverQueue.bitrate,
-        passes: 10
+        passes: 50
       })
       .on("end", reason => {
         if (reason === "Stream is not generating quickly enough.")

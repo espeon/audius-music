@@ -1,7 +1,6 @@
 module.exports = {
-    name: 'nowplaying',
+    name: 'np',
     description: 'Gets the currently playing song!',
-    aliases: ['np'],
     execute(bot, msg, args, serverQueue) {
         if (!serverQueue) {
             return msg.channel.send(`There is nothing playing.`)

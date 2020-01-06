@@ -1,12 +1,13 @@
 module.exports = handleVideo
-
-function handleVideo(video, msg, voiceChannel, playlist = false, queue) {
-    const serverQueue = queue.get(msg.guild.id)
+let bitrate = 320
+async function handleVideo(video, msg, voiceChannel, playlist = false) {
+    const play = require("../functions/play");
+    const serverQueue = global.queue.get(msg.guild.id)
     const song = {
-      id: id,
-      title: title,
-      url: murl,
-      link: streamlink
+      id: video.id,
+      title: video.title,
+      url: video.murl,
+      link: video.streamlink
     }
     if (!serverQueue) {
       const queueConstruct = {
@@ -18,25 +19,21 @@ function handleVideo(video, msg, voiceChannel, playlist = false, queue) {
         playing: true,
         bitrate: bitrate
       }
-      queue.set(msg.guild.id, queueConstruct)
+      global.queue.set(msg.guild.id, queueConstruct)
   
       queueConstruct.songs.push(song)
   
       try {
-        let connection = voiceChannel.join()
-        .then(() => {
-          queueConstruct.connection = connection
-          play(msg.guild, queueConstruct.songs[0])
-        })
-        
+        let connection = await voiceChannel.join()
+        queueConstruct.connection = connection
+        play(msg.guild, queueConstruct.songs[0])
       } catch (error) {
         console.error(`I could not join the voice channel: ${error}`)
-        queue.delete(msg.guild.id)
+        global.queue.delete(msg.guild.id)
         return msg.channel.send(`I could not join the voice channel: ${error}`)
       }
     } else {
       serverQueue.songs.push(song)
-      console.log(serverQueue.songs)
       if (playlist) return undefined
       else
         return msg.channel.send(

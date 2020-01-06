@@ -1,10 +1,12 @@
 # audius-music
 a music bot for the Audius discord server
 
-## commands
+add it here: https://discordapp.com/oauth2/authorize?scope=bot&permissions=66440512&client_id=653410619587821568
+
+### commands
 
 m!play
- (Plays new song and autojoins if used. Usage: m!play [link/ search term])
+ (Plays new song and autojoins if used.) - Usage: m!play [audius/soundcloud link/ search term])
 
 m!skip
  (Skips currently playing song.)
@@ -19,10 +21,10 @@ m!clear
  (Clears all current queue entries)
 
 m!volume
-(Select volume for the audio. Usage: m!volume [0 - 200 (no limit but don't go higher)]
+ (Select volume for the audio.) - Usage: m!volume [0 - 200]
 
 m!q
- (Displays all current songs in the queue. Usage: m!q/ m!queue
+ (Displays all current songs in the queue.)
 
 m!pause
  (Pauses audio)
