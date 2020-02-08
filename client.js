@@ -107,11 +107,12 @@ client.on("message", async msg => {
   
   return undefined;
 });
-
+/*
 process.on("unhandledRejection", function(error) {
   console.error(`Uncaught Promise Rejection:\n${error}`);
   global.message.reply(`Uncaught Promise Rejection:\n${error}`);
 });
+*/
 // ^ Promise rejections are confusing, heres a link: https://davidwalsh.name/promises - Bass
 
 process.on("uncaughtException", function(err) {

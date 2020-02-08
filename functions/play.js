@@ -33,7 +33,7 @@ async function play(guild, songe, bot) {
       .play(song.url, {
         volume: 0.5,
         bitrate: serverQueue.bitrate,
-        passes: 10
+        passes: 50
       })
       .on("end", reason => {
         if (reason === "Stream is not generating quickly enough.")
