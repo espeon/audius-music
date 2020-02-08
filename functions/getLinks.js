@@ -4,6 +4,7 @@ async function getLinks(msg, argu, voiceChannel, youtube) {
   const discord = require("discord.js");
   const axios = require("axios");
   const request = require("request");
+  const { token, prefix, ytkey, sckey } = process.env;
   let args = JSON.parse(argu).join(" ");
   if (args.match(/^https?:\/\/(www.youtube.com|youtube.com)\/playlist(.*)$/)) {
     const playlist = await youtube.getPlaylist(args);
@@ -57,7 +58,7 @@ async function getLinks(msg, argu, voiceChannel, youtube) {
             let soundcloud = JSON.parse(body)[0];
             request(
               soundcloud.media.transcodings[0].url +
-                "?client_id=Vu5tlmvC9eCLFZkxXG32N1yQMfDSAPAA",
+                `?client_id=${sckey}`,
               function(error, response, body1) {
                 if (response.statusCode == 404) {
                   return msg.channel.send("This track can't be played.");
@@ -194,11 +195,23 @@ async function getLinks(msg, argu, voiceChannel, youtube) {
       } else {
         let video = await youtube.getVideo(url);
       }
+      if(url.includes("youtube.com/")){
+        console.log("youtube video")
+      let info = await youtube.getVideo(url);
+        let video = info
+      info.id = video.id;
+      info.title = discord.Util.escapeMarkdown(video.title);
+      info.murl = video.url;
+      info.streamlink = video.url;
+      // eslint-disable-line no-await-in-loop
+      return handleVideo(info, msg, voiceChannel, true); // eslint-disable-line no-await-in-loop
+      }
     } catch (error) {
       try {
         if (args == "") {
           return msg.channel.send("you didn't tell me what to play!!!");
         }
+        
         var videos = await youtube.searchVideos(args, 10);
         let index = 0;
         if (videos.map.size == 0) throw "No videos found";
