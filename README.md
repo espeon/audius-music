@@ -5,29 +5,20 @@ add it here: https://discordapp.com/oauth2/authorize?scope=bot&permissions=66440
 
 ### commands
 
-m!play
- (Plays new song and autojoins if used.) - Usage: m!play [audius/soundcloud link/ search term])
+m!play - Plays new song and autojoins if used. - Usage: m!play [audius/soundcloud link/ search term])
 
-m!skip
- (Skips currently playing song.)
+m!skip - Skips currently playing song.
 
-m!stop
- (Stops music queue)
+m!stop - Stops music queue.
 
-m!leave
- (Disconnects Music Bot)
+m!leave - Disconnects Music Bot.
 
-m!clear
- (Clears all current queue entries)
+m!clear - Clears all current queue entries.
 
-m!volume
- (Select volume for the audio.) - Usage: m!volume [0 - 200]
+m!volume - Select volume for the audio. - Usage: m!volume [0 - 200]
 
-m!q
- (Displays all current songs in the queue.)
+m!q - Displays all current songs in the queue.
 
-m!pause
- (Pauses audio)
+m!pause - Pauses audio
 
-m!resume
-(Resumes audio)
+m!resume - Resumes audio
