@@ -4,7 +4,12 @@ async function getLinks(msg, argu, voiceChannel, youtube) {
   const discord = require("discord.js");
   const axios = require("axios");
   const request = require("request");
-  const { token, prefix, ytkey, sckey } = process.env;
+  const {
+    token,
+    prefix,
+    ytkey,
+    sckey
+  } = process.env;
   let args = JSON.parse(argu).join(" ");
   if (args.match(/^https?:\/\/(www.youtube.com|youtube.com)\/playlist(.*)$/)) {
     const playlist = await youtube.getPlaylist(args);
@@ -28,8 +33,7 @@ async function getLinks(msg, argu, voiceChannel, youtube) {
       if (typeof url == "") {
         return msg.channel.send("you didn't tell me what to play!!!");
       }
-      /* for soundcloud's v1 API
-            
+      /* // for soundcloud's v1 API
             if (url.includes("soundcloud.com")) {
             request(
                 `https://kanbot-api.glitch.me/api/sc/track?sc=${url}`,
@@ -50,7 +54,7 @@ async function getLinks(msg, argu, voiceChannel, youtube) {
       if (url.includes("soundcloud.com")) {
         request(
           `https://kanbot-api.glitch.me/api/sc/track?sc=${url}&v2=true`,
-          function(error, response, body) {
+          function (error, response, body) {
             if (response.statusCode == 404) {
               console.log(body);
               return msg.channel.send("This track can't be played.");
@@ -58,8 +62,8 @@ async function getLinks(msg, argu, voiceChannel, youtube) {
             let soundcloud = JSON.parse(body)[0];
             request(
               soundcloud.media.transcodings[0].url +
-                `?client_id=${sckey}`,
-              function(error, response, body1) {
+              `?client_id=${sckey}`,
+              function (error, response, body1) {
                 if (response.statusCode == 404) {
                   return msg.channel.send("This track can't be played.");
                 }
@@ -87,7 +91,7 @@ async function getLinks(msg, argu, voiceChannel, youtube) {
             .pop();
           async function e(options) {
             return new Promise(resolve => {
-              request(options, async function(error, response, body) {
+              request(options, async function (error, response, body) {
                 let q = await JSON.parse(body);
                 console.log(JSON.parse(body).data[0].title);
                 resolve(JSON.parse(body).data[0]);
@@ -98,12 +102,13 @@ async function getLinks(msg, argu, voiceChannel, youtube) {
             for (const id of list) {
               options = {
                 url: "https://discoveryprovider3.audius.co/tracks",
-                qs: { id: id.track },
+                qs: {
+                  id: id.track
+                },
                 headers: {
                   Host: "discoveryprovider3.audius.co",
                   Accept: "application/json",
-                  "User-Agent":
-                    "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:72.0) Gecko/20100101 Firefox/72.0",
+                  "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:72.0) Gecko/20100101 Firefox/72.0",
                   json: true
                 }
               };
@@ -116,23 +121,24 @@ async function getLinks(msg, argu, voiceChannel, youtube) {
                 }&title=${q.route_id.split("/")[1]}&handle=${
                   q.route_id.split("/")[0]
                 }`;
-            info.streamlink = info.streamlink = `https://audius.co/${q.route_id}-${q.track_id}`;
+              info.streamlink = info.streamlink = `https://audius.co/${q.route_id}-${q.track_id}`;
               await handleVideo(info, msg, voiceChannel, true);
             }
           }
 
           let options = {
             url: "https://discoveryprovider3.audius.co/playlists",
-            qs: { playlist_id: id },
+            qs: {
+              playlist_id: id
+            },
             headers: {
               Host: "discoveryprovider3.audius.co",
               Accept: "application/json",
-              "User-Agent":
-                "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:72.0) Gecko/20100101 Firefox/72.0",
+              "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:72.0) Gecko/20100101 Firefox/72.0",
               json: true
             }
           };
-          request(options, async function(error, response, body) {
+          request(options, async function (error, response, body) {
             let optionsarray = [];
             let list = JSON.parse(body).data[0].playlist_contents.track_ids;
             let res = await b(list);
@@ -161,21 +167,20 @@ async function getLinks(msg, argu, voiceChannel, youtube) {
             .pop();
           let options = {
             method: "POST",
-            url:
-              "https://discoveryprovider2.audius.co/tracks_including_unlisted",
-            headers: { "Content-Type": "application/json" },
+            url: "https://discoveryprovider2.audius.co/tracks_including_unlisted",
+            headers: {
+              "Content-Type": "application/json"
+            },
             body: {
-              tracks: [
-                {
-                  id: id,
-                  url_title: slug,
-                  handle: username
-                }
-              ]
+              tracks: [{
+                id: id,
+                url_title: slug,
+                handle: username
+              }]
             },
             json: true
           };
-          request(options, function(error, response, body) {
+          request(options, function (error, response, body) {
             // I don't even know how to switch this to axios - Bass
             if (body.success != true) {
               console.log(body.success);
@@ -195,23 +200,22 @@ async function getLinks(msg, argu, voiceChannel, youtube) {
       } else {
         let video = await youtube.getVideo(url);
       }
-      if(url.includes("youtube.com/")){
+      if (url.includes("youtube.com/")) {
         console.log("youtube video")
-      let info = await youtube.getVideo(url);
+        let info = await youtube.getVideo(url);
         let video = info
-      info.id = video.id;
-      info.title = discord.Util.escapeMarkdown(video.title);
-      info.murl = video.url;
-      info.streamlink = video.url;
-      // eslint-disable-line no-await-in-loop
-      return handleVideo(info, msg, voiceChannel, true); // eslint-disable-line no-await-in-loop
+        info.id = video.id;
+        info.title = discord.Util.escapeMarkdown(video.title);
+        info.murl = video.url;
+        info.streamlink = video.url;
+        // eslint-disable-line no-await-in-loop
+        return handleVideo(info, msg, voiceChannel, true); // eslint-disable-line no-await-in-loop
       }
     } catch (error) {
       try {
         if (args == "") {
           return msg.channel.send("you didn't tell me what to play!!!");
         }
-        
         var videos = await youtube.searchVideos(args, 10);
         let index = 0;
         if (videos.map.size == 0) throw "No videos found";
@@ -223,13 +227,13 @@ ${videos.map(video2 => `**${++index} -** ${video2.title}`).join("\n")}
 					`
           )
           .then(msg =>
-            setTimeout(function() {
+            setTimeout(function () {
               msg.delete();
             }, 10500)
           );
         // eslint-disable-next-line max-depth
         try {
-          setTimeout(function() {
+          setTimeout(function () {
             //nothing lol
           }, 250);
           const filter = m => m.content > 0 && m.content < 11;
