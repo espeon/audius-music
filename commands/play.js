@@ -8,6 +8,7 @@ module.exports = {
     const discord = require("discord.js");
     const axios = require("axios");
     const request = require("request");
+    const buffer = require('audio-buffer')
     const voiceChannel = msg.member.voice.channel;
 
     if (!voiceChannel) {

@@ -3,8 +3,13 @@ const handleVideo = require("../functions/handleVideo");
 async function play(guild, songe, bot) {
   const ytdl = require("ytdl-core")
   const leaveVC = require("../functions/leaveVC")
+  const audiobuffer = require('audio-buffer')
   const serverQueue = global.queue.get(guild.id)
 
+  let buf = new audiobuffer(dispatcher, {
+    length: 2040,
+    numberOfChannels: 2
+  }) // I dunno how to pipe through the buffer, could you help me Em? - Bass
   if (!songe) {
     leaveVC(serverQueue, guild, true)
     return
@@ -14,7 +19,10 @@ async function play(guild, songe, bot) {
   console.log(song)
   if (song.url.includes("youtube")) {
     const dispatcher = serverQueue.connection
-      .play(ytdl(song.url, {filter: 'audioonly', highWaterMark: 1<<25}), {
+      .play(ytdl(song.url, {
+        filter: 'audioonly',
+        highWaterMark: 1 << 25
+      }), {
         volume: 0.5,
         bitrate: serverQueue.bitrate,
         passes: 10

@@ -5,9 +5,16 @@ const ytdl = require("ytdl-core");
 const ydl = require("youtube-dl");
 const fs = require("fs"); // For reading command files - Bass
 global.message; // Message placeholder - Bass
-const client = new Discord.Client({ disableEveryone: true });
+const client = new Discord.Client({
+  disableEveryone: true
+});
 client.commands = new Discord.Collection();
-const { token, prefix, ytkey, sckey } = process.env;
+const {
+  token,
+  prefix,
+  ytkey,
+  sckey
+} = process.env;
 const youtube = new YouTube(ytkey);
 
 const commandFiles = fs.readdirSync("./commands"); // read the folder that holds the commands,
@@ -32,7 +39,9 @@ client.on("error", console.error);
 
 client.on("ready", () => {
   console.log(`Online and ready to DJ! Prefix is ${prefix}`);
-  client.user.setActivity("some hot tunes", { type: "LISTENING" });
+  client.user.setActivity("some hot tunes", {
+    type: "LISTENING"
+  });
 });
 
 client.on("message", async msg => {
@@ -52,9 +61,9 @@ client.on("message", async msg => {
       .replace(/[\u201C\u201D]/g, '"')
       .replace(/>/g, "")
       .replace(/</g, "");
-    const re = allowSingleQuote
-      ? /\s*(?:("|')([^]*?)\1|(\S+))\s*/g
-      : /\s*(?:(")([^]*?)"|(\S+))\s*/g;
+    const re = allowSingleQuote ?
+      /\s*(?:("|')([^]*?)\1|(\S+))\s*/g :
+      /\s*(?:(")([^]*?)"|(\S+))\s*/g;
     const result = [];
     let match = [];
     // Large enough to get all items
@@ -71,14 +80,13 @@ client.on("message", async msg => {
   }
 
   const args = parseArgs(msg.content.slice(prefix.length)); // slices the prefix from the command
-  const command = args
-    .shift()
-    .toLowerCase(); /* make the command lowercase 
-                                                EXAMPLE: let string = 'ArE yoU MoCkInG Me?'
-                                                let lowerString = string.shift().toLowerCase()
-                                                // lowerString is 'are you mocking me?' 
-                                                - Bass
-                                                */
+  const command = args.shift().toLowerCase();
+  /* make the command lowercase
+  EXAMPLE: let string = 'ArE yoU MoCkInG Me?'
+  let lowerString = string.shift().toLowerCase()
+  // lowerString is 'are you mocking me?'
+  - Bass
+  */
   const searchString = args.join(" ");
   const url = args[1] ? args[1].replace(/<(.+)>/g, "$1") : "";
   const serverQueue = global.queue.get(msg.guild.id);
@@ -88,7 +96,7 @@ client.on("message", async msg => {
     client.commands.find(
       cmdo => cmdo.aliases && cmdo.aliases.includes(command)
     );
-  if (cmd === "restart"){
+  if (cmd === "restart") {
     if (msg.author.id == 267121875765821440) {
       msg.channel.send("Restarting music bot...");
       client.destroy();
@@ -104,7 +112,7 @@ client.on("message", async msg => {
     console.error(error);
     msg.channel.send("there was an error trying to execute that command!");
   }
-  
+
   return undefined;
 });
 /*
@@ -115,7 +123,7 @@ process.on("unhandledRejection", function(error) {
 */
 // ^ Promise rejections are confusing, heres a link: https://davidwalsh.name/promises - Bass
 
-process.on("uncaughtException", function(err) {
+process.on("uncaughtException", function (err) {
   console.log(`Caught exception: ${err}`);
   global.message.reply(
     `Fatal error, please alert an Audius staff member about this!`
