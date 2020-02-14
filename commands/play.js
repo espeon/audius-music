@@ -1,6 +1,7 @@
 module.exports = {
   name: "play",
   description: "Play a song in VC!",
+  aliases: "p",
   async execute(bot, msg, args, serverQueue, youtube) {
     args = JSON.stringify(args)
     const getLinks = require("../functions/getLinks");
