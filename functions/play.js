@@ -14,7 +14,7 @@ async function play(guild, songe, bot) {
   console.log(song)
   if (song.url.includes("youtube")) {
     const dispatcher = serverQueue.connection
-      .play(ytdl(song.url), {
+      .play(ytdl(song.url, {filter: 'audioonly', highWaterMark: 1<<25}), {
         volume: 0.5,
         bitrate: serverQueue.bitrate,
         passes: 10
@@ -33,7 +33,7 @@ async function play(guild, songe, bot) {
       .play(song.url, {
         volume: 0.5,
         bitrate: serverQueue.bitrate,
-        passes: 10
+        passes: 50
       })
       .on("end", reason => {
         if (reason === "Stream is not generating quickly enough.")
