@@ -21,7 +21,7 @@ async function getLinks(msg, url, voiceChannel) {
         let soundcloud = JSON.parse(body)[0];
         request(
           soundcloud.media.transcodings[0].url + `?client_id=${sckey}`,
-          function(error, response, body1) {
+          async function(error, response, body1) {
             if (response.statusCode == 404) {
               return msg.channel.send("This track can't be played.");
             }
@@ -31,7 +31,7 @@ async function getLinks(msg, url, voiceChannel) {
               "sc-" + soundcloud.id + soundcloud.media.transcodings[0].preset;
             info.title = soundcloud.title + " by " + soundcloud.user.username;
             info.murl = play.url;
-            info.duration = findLengthOfm3u8(info.murl);
+            info.duration = await findLengthOfm3u8(info.murl);
             info.streamlink = url;
             return handleVideo(info, msg, voiceChannel);
           }
@@ -74,9 +74,9 @@ async function getLinks(msg, url, voiceChannel) {
           }&title=${q.route_id.split("/")[1]}&handle=${
             q.route_id.split("/")[0]
           }`;
-          info.duration = findLengthOfm3u8(info.murl);
-          info.streamlink = info.streamlink = `https://audius.co/${q.route_id}-${q.track_id}`;
-          await handleVideo(info, msg, voiceChannel, true);
+          info.duration = await findLengthOfm3u8(info.murl);
+          info.streamlink = `https://audius.co/${q.route_id}-${q.track_id}`;
+          return handleVideo(info, msg, voiceChannel, true);
         }
       }
 
@@ -167,7 +167,7 @@ async function getLinks(msg, url, voiceChannel) {
       info.streamlink = video.url;
       info.duration = video.durationSeconds
       // eslint-disable-line no-await-in-loop
-      await handleVideo(info, msg, voiceChannel); // eslint-disable-line no-await-in-loop
+      return handleVideo(info, msg, voiceChannel); // eslint-disable-line no-await-in-loop
     }
     return msg.channel.send(
       `✅ Playlist: **${playlist.title}** has been added to the queue!`
@@ -242,7 +242,6 @@ ${videos.map(video2 => `**${++index} -** ${video2.title}`).join("\n")}
 
 async function findLengthOfm3u8(url) {
   var parser = new m3u8Parser.Parser();
-
   const instance = await axios.get(url);
 
   parser.push(instance.data);
@@ -255,5 +254,6 @@ async function findLengthOfm3u8(url) {
   await parsedManifest.segments.forEach(segment => {
     totalduration = totalduration + segment.duration;
   });
+  console.log(Math.round(totalduration));
   return Math.round(totalduration);
 }
