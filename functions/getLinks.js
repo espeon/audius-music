@@ -155,9 +155,7 @@ async function getLinks(msg, url, voiceChannel) {
         return handleVideo(info, msg, voiceChannel);
       });
     }
-  } else if (
-    url.match(/^https?:\/\/(www.youtube.com|youtube.com)\/playlist(.*)$/)
-  ) {
+  } else if (url.match(/^https?:\/\/(www.youtube.com|youtube.com)\/playlist(.*)$/)) {
     const playlist = await youtube.getPlaylist(url);
     const videos = await playlist.getVideos();
     for (const video of Object.values(videos)) {
@@ -166,14 +164,14 @@ async function getLinks(msg, url, voiceChannel) {
       info.title = discord.Util.escapeMarkdown(video.title);
       info.murl = video.url;
       info.streamlink = video.url;
-      info.duration = video.durationSeconds;
+      info.duration = info.durationSeconds;
       // eslint-disable-line no-await-in-loop
-      return handleVideo(info, msg, voiceChannel); // eslint-disable-line no-await-in-loop
+      await handleVideo(info, msg, voiceChannel, true); // eslint-disable-line no-await-in-loop
     }
     return msg.channel.send(
       `✅ Playlist: **${playlist.title}** has been added to the queue!`
     );
-  } else if (url.includes("youtube.com/")) {
+  } else if (url.includes("youtube.com/watch?")) {
     let info = await youtube.getVideo(url);
     let video = info;
     info.id = video.id;
