@@ -48,6 +48,7 @@ async function getLinks(msg, url, voiceChannel) {
         return new Promise(resolve => {
           request(options, async function(error, response, body) {
             let q = await JSON.parse(body);
+            console.log(JSON.parse(body).data[0].title);
             resolve(JSON.parse(body).data[0]);
           });
         });
@@ -68,15 +69,15 @@ async function getLinks(msg, url, voiceChannel) {
           let q = await e(options);
           let info = [];
           info.id = id;
-          info.title = `${q.title}`;
+          info.title = q.title;
           info.murl = `https://kanbot-api.glitch.me/api/audius/generate.m3u8?id=${
             q.track_id
           }&title=${q.route_id.split("/")[1]}&handle=${
             q.route_id.split("/")[0]
           }`;
           info.duration = await findLengthOfm3u8(info.murl);
-          info.streamlink = `https://audius.co/${q.route_id}-${q.track_id}`;
-          return handleVideo(info, msg, voiceChannel, true);
+          info.streamlink = info.streamlink = `https://audius.co/${q.route_id}-${q.track_id}`;
+          await handleVideo(info, msg, voiceChannel, true);
         }
       }
 
@@ -118,7 +119,7 @@ async function getLinks(msg, url, voiceChannel) {
         .replace("https://audius.co/", "")
         .split("-")
         .pop();
-      console.log(id, slug, username)
+      console.log(id, slug, username);
       let options = {
         method: "POST",
         url: "https://discoveryprovider2.audius.co/tracks_including_unlisted",
@@ -137,8 +138,8 @@ async function getLinks(msg, url, voiceChannel) {
       request(options, async function(error, response, body) {
         // I don't even know how to switch this to axios - Bass
         if (body.success != true) {
-          console.log(body)
-          console.log(options.body)
+          console.log(body);
+          console.log(options.body);
           return msg.channel.send("This may not be a valid Audius link.");
         }
 
@@ -165,7 +166,7 @@ async function getLinks(msg, url, voiceChannel) {
       info.title = discord.Util.escapeMarkdown(video.title);
       info.murl = video.url;
       info.streamlink = video.url;
-      info.duration = video.durationSeconds
+      info.duration = video.durationSeconds;
       // eslint-disable-line no-await-in-loop
       return handleVideo(info, msg, voiceChannel); // eslint-disable-line no-await-in-loop
     }
@@ -179,7 +180,7 @@ async function getLinks(msg, url, voiceChannel) {
     info.title = discord.Util.escapeMarkdown(video.title);
     info.murl = video.url;
     info.streamlink = video.url;
-    info.duration = video.durationSeconds
+    info.duration = video.durationSeconds;
     // eslint-disable-line no-await-in-loop
     return handleVideo(info, msg, voiceChannel, true); // eslint-disable-line no-await-in-loop
   } else {
@@ -235,7 +236,7 @@ ${videos.map(video2 => `**${++index} -** ${video2.title}`).join("\n")}
     info.title = discord.Util.escapeMarkdown(video.title);
     info.murl = video.url;
     info.streamlink = video.url;
-    info.duration = video.durationSeconds
+    info.duration = video.durationSeconds;
     return handleVideo(info, msg, voiceChannel);
   }
 }
