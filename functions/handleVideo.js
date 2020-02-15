@@ -7,7 +7,8 @@ async function handleVideo(video, msg, voiceChannel, playlist = false) {
       id: video.id,
       title: video.title,
       url: video.murl,
-      link: video.streamlink
+      link: video.streamlink,
+      duration: video.duration
     }
     if (!serverQueue) {
       const queueConstruct = {
@@ -17,7 +18,7 @@ async function handleVideo(video, msg, voiceChannel, playlist = false) {
         songs: [],
         volume: 100,
         playing: true,
-        bitrate: bitrate
+        bitrate: voiceChannel.bitrate / 1000
       }
       global.queue.set(msg.guild.id, queueConstruct)
   
