@@ -163,7 +163,7 @@ async function getLinks(msg, url, voiceChannel) {
       info.title = discord.Util.escapeMarkdown(video.title);
       info.murl = video.url;
       info.streamlink = video.url;
-      info.duration = fmtHMS(video.durationSeconds);
+      info.duration = video.durationSeconds
       // eslint-disable-line no-await-in-loop
       await handleVideo(info, msg, voiceChannel); // eslint-disable-line no-await-in-loop
     }
@@ -177,7 +177,7 @@ async function getLinks(msg, url, voiceChannel) {
     info.title = discord.Util.escapeMarkdown(video.title);
     info.murl = video.url;
     info.streamlink = video.url;
-    info.duration = fmtHMS(video.durationSeconds);
+    info.duration = video.durationSeconds
     // eslint-disable-line no-await-in-loop
     return handleVideo(info, msg, voiceChannel, true); // eslint-disable-line no-await-in-loop
   } else {
@@ -233,7 +233,7 @@ ${videos.map(video2 => `**${++index} -** ${video2.title}`).join("\n")}
     info.title = discord.Util.escapeMarkdown(video.title);
     info.murl = video.url;
     info.streamlink = video.url;
-    info.duration = fmtHMS(video.durationSeconds);
+    info.duration = video.durationSeconds
     return handleVideo(info, msg, voiceChannel);
   }
 }
@@ -253,17 +253,5 @@ async function findLengthOfm3u8(url) {
   await parsedManifest.segments.forEach(segment => {
     totalduration = totalduration + segment.duration;
   });
-  return fmtHMS(totalduration);
-}
-var fmtHMS = (secs) => {
-    var sec_num = parseInt(secs, 10)
-    var hours   = Math.floor(sec_num / 3600)
-    var minutes = Math.floor(sec_num / 60) % 60
-    var seconds = sec_num % 60
-
-    return [hours,minutes,seconds]
-        .map(v => v < 10 ? "0" + v : v)
-        .filter((v,i) => v !== "00" || i > 0)
-        .join(":")
-        .replace(/^0+/, '')
+  return Math.round(totalduration);
 }

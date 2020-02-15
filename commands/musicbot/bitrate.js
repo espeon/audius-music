@@ -15,11 +15,10 @@ module.exports = class extends Command {
       permLevel: 0,
       botPerms: [],
       requiredConfigs: [],
-      description: 'Adds a song to queue from YouTube URL or search term.',
+      description: 'Sets or displays the bitrate the bot is streaming at.',
       quotedStringSupport: true,
       usage: '[args:string]',
-      usageDelim: '',
-      extendedHelp: 'Fetches song by YouTube URL or returns first search parameter, or an uploaded music file.',
+      usageDelim: ''
     });
     this.exp = /^(?:https?:\/\/)?(?:www\.)?(?:youtube\.com\/\S*(?:(?:\/e(?:mbed)?)?\/|watch\/?\?(?:\S*?&?v=))|youtu\.be\/)([\w-]{11})(?:[^\w-]|$)/;
   }
@@ -49,4 +48,5 @@ module.exports = class extends Command {
     serverQueue.connection.dispatcher.setBitrate(args);
     return msg.channel.send(`Bitrate was set to **${args}kbps**`);
     }
+  
   };

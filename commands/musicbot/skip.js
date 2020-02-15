@@ -15,12 +15,12 @@ module.exports = class extends Command {
       permLevel: 0,
       botPerms: [],
       requiredConfigs: [],
-      description: "Adds a song to queue from YouTube URL or search term.",
+      description: "Skips a song.",
       quotedStringSupport: true,
       usage: "[song:string]",
       usageDelim: "",
       extendedHelp:
-        "Fetches song by YouTube URL or returns first search parameter, or an uploaded music file."
+        "If your VC has more than 4 people, you need either the DJ role or higher or you need 40% or more people to skip."
     });
     this.exp = /^(?:https?:\/\/)?(?:www\.)?(?:youtube\.com\/\S*(?:(?:\/e(?:mbed)?)?\/|watch\/?\?(?:\S*?&?v=))|youtu\.be\/)([\w-]{11})(?:[^\w-]|$)/;
   }
