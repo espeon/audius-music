@@ -68,7 +68,7 @@ async function getLinks(msg, url, voiceChannel) {
           let q = await e(options);
           let info = [];
           info.id = id;
-          info.title = `${q.data[0].title}`;
+          info.title = `${q.title}`;
           info.murl = `https://kanbot-api.glitch.me/api/audius/generate.m3u8?id=${
             q.track_id
           }&title=${q.route_id.split("/")[1]}&handle=${
@@ -118,6 +118,7 @@ async function getLinks(msg, url, voiceChannel) {
         .replace("https://audius.co/", "")
         .split("-")
         .pop();
+      console.log(id, slug, username)
       let options = {
         method: "POST",
         url: "https://discoveryprovider2.audius.co/tracks_including_unlisted",
@@ -136,7 +137,8 @@ async function getLinks(msg, url, voiceChannel) {
       request(options, async function(error, response, body) {
         // I don't even know how to switch this to axios - Bass
         if (body.success != true) {
-          console.log(body.success);
+          console.log(body)
+          console.log(options.body)
           return msg.channel.send("This may not be a valid Audius link.");
         }
 

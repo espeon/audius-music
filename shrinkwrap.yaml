@@ -9,6 +9,7 @@ dependencies:
   music-metadata: 6.3.3
   request: 2.88.2
   simple-youtube-api: 5.2.1
+  sodium: 3.0.2
   ytdl-core: 1.0.7
 packages:
   /@babel/runtime/7.8.4:
@@ -1173,6 +1174,13 @@ packages:
     dev: false
     resolution:
       integrity: sha512-vmndP9Bkh35tifn2OwY+th2imSsfYtmDqczgdOW5yEARFzvSoR8VSQFsivJnctfV5QHQUL6VrOpNdbmDRLh9Bg==
+  /sodium/3.0.2:
+    dependencies:
+      node-addon-api: 2.0.0
+    dev: false
+    requiresBuild: true
+    resolution:
+      integrity: sha512-IsTwTJeoNBU97km3XkrbCGC/n/9aUQejgD3QPr2YY2gtbSPru3TI6nhCqgoez9Mv88frF9oVZS/jrXFbd6WXyA==
   /sshpk/1.16.1:
     dependencies:
       asn1: 0.2.4
@@ -1476,4 +1484,5 @@ specifiers:
   music-metadata: ^6.3.3
   request: ^2.88.2
   simple-youtube-api: ^5.2.1
+  sodium: ^3.0.2
   ytdl-core: ^1.0.7
