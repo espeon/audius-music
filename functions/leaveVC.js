@@ -13,7 +13,7 @@ async function leaveVC(serverQueue, guild, timer = false) {
   serverQueue.textChannel.send("Leaving in 3 minutes...").then(msg =>
     setTimeout(function() {
       msg.delete();
-    }, 210)
+    }, 180000)
   );
   setTimeout(function() {
     leave(serverQueue, guild);
