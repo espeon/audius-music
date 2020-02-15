@@ -15,12 +15,10 @@ module.exports = class extends Command {
       permLevel: 0,
       botPerms: [],
       requiredConfigs: [],
-      description: "Adds a song to queue from YouTube URL or search term.",
+      description: "Resumes music.",
       quotedStringSupport: true,
       usage: "[song:string]",
-      usageDelim: "",
-      extendedHelp:
-        "Fetches song by YouTube URL or returns first search parameter, or an uploaded music file."
+      usageDelim: ""
     });
     this.exp = /^(?:https?:\/\/)?(?:www\.)?(?:youtube\.com\/\S*(?:(?:\/e(?:mbed)?)?\/|watch\/?\?(?:\S*?&?v=))|youtu\.be\/)([\w-]{11})(?:[^\w-]|$)/;
   }

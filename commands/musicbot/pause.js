@@ -6,7 +6,7 @@ const {
 module.exports = class extends Command {
   constructor(...args) {
     super(...args, {
-      name: 'nowplaying',
+      name: 'pause',
       enabled: true,
       runIn: ['text'],
       cooldown: 2,
@@ -15,11 +15,10 @@ module.exports = class extends Command {
       permLevel: 0,
       botPerms: [],
       requiredConfigs: [],
-      description: 'Adds a song to queue from YouTube URL or search term.',
+      description: 'Pauses music.',
       quotedStringSupport: true,
       usage: '[song:string]',
       usageDelim: '',
-      extendedHelp: 'Fetches song by YouTube URL or returns first search parameter, or an uploaded music file.',
     });
     this.exp = /^(?:https?:\/\/)?(?:www\.)?(?:youtube\.com\/\S*(?:(?:\/e(?:mbed)?)?\/|watch\/?\?(?:\S*?&?v=))|youtu\.be\/)([\w-]{11})(?:[^\w-]|$)/;
   }
@@ -28,9 +27,15 @@ module.exports = class extends Command {
   
   async run(msg) {
         const serverQueue = global.queue.get(msg.guild.id);
-        if (!serverQueue) {
-            return msg.channel.send(`There is nothing playing.`)
+        if (!msg.member.voice.channel) {
+            return msg.channel.send(`Please join a voice channel first.`) 
+         }
+        if (serverQueue && serverQueue.playing) {
+            serverQueue.playing = false
+            serverQueue.connection.dispatcher.pause()
+            return msg.channel.send(`music has been paused.`)
+        }else{
+        return msg.channel.send(`There is nothing playing.`)
         }
-        return msg.channel.send(`🎶 Now playing: **${serverQueue.songs[0].title}**`)  
     }
   };
