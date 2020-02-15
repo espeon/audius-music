@@ -42,6 +42,7 @@ module.exports = class extends Command {
         );
       pg = (JSON.parse(num) - 1) * 10;
     }
+
     return msg.channel.send({
       embed: {
         title: `Queue:`,
@@ -50,7 +51,7 @@ module.exports = class extends Command {
           .map(
             song =>
               `**-** [${song.title}](${song.link}) (${this.fmtHMS(
-                song.duration
+                Math.round(song.duration)
               )})`
           )
           .join("\n")}\n
@@ -65,7 +66,7 @@ module.exports = class extends Command {
       }
     });
   }
-  async fmtHMS(secs) {
+  fmtHMS(secs) {
     var sec_num = parseInt(secs, 10);
     var hours = Math.floor(sec_num / 3600);
     var minutes = Math.floor(sec_num / 60) % 60;

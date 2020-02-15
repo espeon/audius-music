@@ -15,6 +15,7 @@ module.exports = class extends Command {
       permLevel: 0,
       botPerms: [],
       requiredConfigs: [],
+      aliases: ["p"],
       description: 'Plays a link or searches for music',
       quotedStringSupport: true,
       usage: '[song:string]',
