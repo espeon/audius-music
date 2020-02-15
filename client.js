@@ -1,4 +1,5 @@
 const { Client } = require('klasa');
+require('dotenv').config()
 const { token, prefix, ytkey, sckey } = process.env;
 
 // set up perms
