@@ -1456,7 +1456,6 @@ packages:
       utf-8-validate: ^5.0.2
       zlib-sync: ^0.1.6
     resolution:
-      registry: 'https://registry.npmjs.org/'
       tarball: 'https://codeload.github.com/discordjs/discord.js/tar.gz/fe7df708e44e0280dfaf0f8e457b154781bb5140'
     version: 12.0.0-dev
   github.com/discordjs/opus/1de32e180f9d44fc0d34d7436224d90d11e355f2:

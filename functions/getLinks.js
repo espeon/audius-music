@@ -3,159 +3,57 @@ module.exports = getLinks;
 const request = require("request");
 const { token, prefix, ytkey, sckey } = process.env;
 const handleVideo = require("../functions/handleVideo");
-var m3u8Parser = require("m3u8-parser");
-const axios = require("axios");
+const audius = require("../functions/sources/audius.js");
+const soundcloud = require("../functions/sources/soundcloud.js");
+const findLengthOfm3u8 = require("../functions/utils/findLengthOfm3u8");
 const YouTube = require("simple-youtube-api");
 const youtube = new YouTube(ytkey);
+
+const needle = require('needle');
+var mm = require("music-metadata");
 
 const discord = require("discord.js");
 
 async function getLinks(msg, url, voiceChannel) {
-  if (url.includes("soundcloud.com")) {
-    request(
-      `https://kanbot-api.glitch.me/api/sc/track?sc=${url}&v2=true`,
-      function(error, response, body) {
-        if (response.statusCode == 404) {
-          return msg.channel.send("This track can't be played.");
-        }
-        let soundcloud = JSON.parse(body)[0];
-        request(
-          soundcloud.media.transcodings[0].url + `?client_id=${sckey}`,
-          async function(error, response, body1) {
-            if (response.statusCode == 404) {
-              return msg.channel.send("This track can't be played.");
-            }
-            let play = JSON.parse(body1);
-            let info = [];
-            info.id =
-              "sc-" + soundcloud.id + soundcloud.media.transcodings[0].preset;
-            info.title = soundcloud.title + " by " + soundcloud.user.username;
-            info.murl = play.url;
-            info.duration = await findLengthOfm3u8(info.murl);
-            info.streamlink = url;
-            return handleVideo(info, msg, voiceChannel);
-          }
-        );
-      }
+  if (url == undefined && msg.attachments.array().length == 0)
+    throw "you didn't tell me what to play!";
+  if (msg.attachments.array().length !== 0) {
+    const ata = await JSON.stringify(msg.attachments);
+    const final = await JSON.parse(ata);
+    console.log(final)
+    let input = final[0].proxyURL;
+    console.log(
+      input.endsWith("ogg") ||
+        input.endsWith("mp3") ||
+        input.endsWith("wav") ||
+        input.endsWith("flac")
     );
+    if (
+      !(input.endsWith("ogg") ||
+      input.endsWith("mp3") ||
+      input.endsWith("wav") ||
+      input.endsWith("flac"))
+    )
+      return msg.send(
+        "That is not a valid file format! Supported formats can be found here => <https://www.npmjs.com/package/music-metadata>"
+      );
+    let info = []
+    let m = await readFileMetadata(final[0].proxyURL)
+    info.id = final[0].id;
+    info.title = discord.Util.escapeMarkdown(final[0].name);
+    info.murl = final[0].proxyURL;
+    info.streamlink = final[0].proxyURL;
+    info.duration = Math.round(m.format.duration)
+    // eslint-disable-line no-await-in-loop
+    await handleVideo(info, msg, voiceChannel); // eslint-disable-line no-await-in-loop
+  } else if (url.includes("soundcloud.com")) {
+    soundcloud(msg, url, voiceChannel);
   } else if (url.includes("audius.co")) {
-    if (url.includes("playlist")) {
-      let id = url
-        .replace("https://audius.co/", "")
-        .split("-")
-        .pop();
-      async function e(options) {
-        return new Promise(resolve => {
-          request(options, async function(error, response, body) {
-            let q = await JSON.parse(body);
-            console.log(JSON.parse(body).data[0].title);
-            resolve(JSON.parse(body).data[0]);
-          });
-        });
-      }
-      async function b(list) {
-        for (const id of list) {
-          options = {
-            url: "https://discoveryprovider3.audius.co/tracks",
-            qs: { id: id.track },
-            headers: {
-              Host: "discoveryprovider3.audius.co",
-              Accept: "application/json",
-              "User-Agent":
-                "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:72.0) Gecko/20100101 Firefox/72.0",
-              json: true
-            }
-          };
-          let q = await e(options);
-          let info = [];
-          info.id = id;
-          info.title = q.title;
-          info.murl = `https://kanbot-api.glitch.me/api/audius/generate.m3u8?id=${
-            q.track_id
-          }&title=${q.route_id.split("/")[1]}&handle=${
-            q.route_id.split("/")[0]
-          }`;
-          info.duration = await findLengthOfm3u8(info.murl);
-          info.streamlink = info.streamlink = `https://audius.co/${q.route_id}-${q.track_id}`;
-          await handleVideo(info, msg, voiceChannel, true);
-        }
-      }
-
-      let options = {
-        url: "https://discoveryprovider3.audius.co/playlists",
-        qs: { playlist_id: id },
-        headers: {
-          Host: "discoveryprovider3.audius.co",
-          Accept: "application/json",
-          "User-Agent":
-            "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:72.0) Gecko/20100101 Firefox/72.0",
-          json: true
-        }
-      };
-      request(options, async function(error, response, body) {
-        let optionsarray = [];
-        let list = JSON.parse(body).data[0].playlist_contents.track_ids;
-        let res = await b(list);
-        await console.log(res);
-        return msg.channel.send(
-          `✅ Playlist: **${
-            JSON.parse(body).data[0].playlist_name
-          }** has been added to the queue!`
-        );
-      });
-    } else {
-      let link = url;
-      if (link.slice(0, -1) === "/") {
-        link = link.slice(0, -1);
-      }
-      let username = link.replace("https://audius.co/", "").split("/")[0];
-      let slugpre = decodeURIComponent(link)
-        .replace("https://audius.co/", "")
-        .split("/")[1]
-        .split("-");
-      slugpre.pop();
-      let slug = slugpre.join("-");
-      let id = link
-        .replace("https://audius.co/", "")
-        .split("-")
-        .pop();
-      console.log(id, slug, username);
-      let options = {
-        method: "POST",
-        url: "https://discoveryprovider2.audius.co/tracks_including_unlisted",
-        headers: { "Content-Type": "application/json" },
-        body: {
-          tracks: [
-            {
-              id: id,
-              url_title: slug,
-              handle: username
-            }
-          ]
-        },
-        json: true
-      };
-      request(options, async function(error, response, body) {
-        // I don't even know how to switch this to axios - Bass
-        if (body.success != true) {
-          console.log(body);
-          console.log(options.body);
-          return msg.channel.send("This may not be a valid Audius link.");
-        }
-
-        let e = body;
-        let info = [];
-        info.id = id;
-        info.title = `${e.data[0].title}・${username}`;
-        info.murl = `https://kanbot-api.glitch.me/api/audius/generate.m3u8?id=${id}&title=${encodeURIComponent(
-          slug
-        )}&handle=${encodeURIComponent(username)}`;
-        info.streamlink = link;
-        info.duration = await findLengthOfm3u8(info.murl);
-        return handleVideo(info, msg, voiceChannel);
-      });
-    }
-  } else if (url.match(/^https?:\/\/(www.youtube.com|youtube.com)\/playlist(.*)$/)) {
+    audius(msg, url, voiceChannel);
+  } else if (url.includes("mp3")) {
+  } else if (
+    url.match(/^https?:\/\/(www.youtube.com|youtube.com)\/playlist(.*)$/)
+  ) {
     const playlist = await youtube.getPlaylist(url);
     const videos = await playlist.getVideos();
     for (const video of Object.values(videos)) {
@@ -238,21 +136,12 @@ ${videos.map(video2 => `**${++index} -** ${video2.title}`).join("\n")}
     return handleVideo(info, msg, voiceChannel);
   }
 }
+async function readFileMetadata(url){
 
-async function findLengthOfm3u8(url) {
-  var parser = new m3u8Parser.Parser();
-  const instance = await axios.get(url);
+      const stream = needle.get(url);
 
-  parser.push(instance.data);
-  parser.end();
-
-  var parsedManifest = parser.manifest;
-
-  let array = [];
-  let totalduration = 0;
-  await parsedManifest.segments.forEach(segment => {
-    totalduration = totalduration + segment.duration;
-  });
-  console.log(Math.round(totalduration));
-  return Math.round(totalduration);
+      return mm.parseStream(stream, null, {duration: true}).then(metadata => {
+        console.log(metadata)
+        return metadata
+      });
 }
