@@ -12,7 +12,7 @@ Client.defaultPermissionLevels
 //load the bot
 new Client({
     fetchAllMembers: false,
-    prefix: '>',
+    prefix: prefix,
     disabledCorePieces: ['commands'],
     disabledEvents:["TYPING_START"],
     commandEditing: true,

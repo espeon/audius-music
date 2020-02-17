@@ -53,8 +53,7 @@ module.exports = class extends Command {
       serverQueue.connection.dispatcher.resume();
       return msg.channel.send(`I've resumed the music!`);
     } 
-    if(song == undefined) throw "you didn't tell me what to play!"
-      
+
       getLinks(msg, url, voiceChannel);
     }
 };

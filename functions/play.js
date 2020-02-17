@@ -17,7 +17,7 @@ async function play(guild, songe, bot) {
       .play(ytdl(song.url, {filter: 'audioonly', highWaterMark: 1<<25}), {
         volume: 0.5,
         bitrate: serverQueue.bitrate,
-        passes: 10
+        passes: 2
       })
       .on("end", reason => {
         if (reason === "Stream is not generating quickly enough.")
@@ -28,12 +28,14 @@ async function play(guild, songe, bot) {
       })
       .on("error", error => console.error(error))
     dispatcher.setVolumeLogarithmic(serverQueue.volume / 100)
-  } else if (song.url.includes("sndcdn")) {
+  } else {
     const dispatcher = serverQueue.connection
       .play(song.url, {
         volume: 0.5,
         bitrate: serverQueue.bitrate,
-        passes: 50
+        passes: 2,
+        highWaterMark: 512,
+        fec:true
       })
       .on("end", reason => {
         if (reason === "Stream is not generating quickly enough.")
@@ -42,23 +44,8 @@ async function play(guild, songe, bot) {
         serverQueue.songs.shift()
         play(guild, serverQueue.songs[0])
       })
-      .on("error", error => console.error(error))
-    dispatcher.setVolumeLogarithmic(serverQueue.volume / 100)
-  } else if (song.url.includes("audius")) {
-    const dispatcher = serverQueue.connection
-      .play(song.url, {
-        volume: 0.5,
-        bitrate: serverQueue.bitrate,
-        passes: 50
-      })
-      .on("end", reason => {
-        if (reason === "Stream is not generating quickly enough.")
-          console.log("Song ended.")
-        else console.log(reason)
-        serverQueue.songs.shift()
-        play(guild, serverQueue.songs[0])
-      })
-      .on("error", error => console.error(error))
+      .on("error", error => {console.error(error)
+                            console.log('aaa')})
     dispatcher.setVolumeLogarithmic(serverQueue.volume / 100)
   }
   serverQueue.textChannel.send(`Now playing **${song.title}**`)
