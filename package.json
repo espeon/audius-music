@@ -21,7 +21,10 @@
     "m3u8-parser": "^4.4.2",
     "music-metadata": "^6.3.3",
     "axios": "^0.19.2",
-    "sodium": "^3.0.2"
+    "sodium": "^3.0.2",
+    "catbox.js": "^0.0.1",
+    "spotify-web-api-node": "^4.0.0",
+    "form-data": "^3.0.0"
   },
   "engines": {
     "node": "11"

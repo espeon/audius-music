@@ -17,17 +17,11 @@ const discord = require("discord.js");
 async function getLinks(msg, url, voiceChannel) {
   if (url == undefined && msg.attachments.array().length == 0)
     throw "you didn't tell me what to play!";
-  if (msg.attachments.array().length !== 0) {
+  if (msg.attachments.array().length !== 0 ) {
     const ata = await JSON.stringify(msg.attachments);
     const final = await JSON.parse(ata);
     console.log(final)
     let input = final[0].proxyURL;
-    console.log(
-      input.endsWith("ogg") ||
-        input.endsWith("mp3") ||
-        input.endsWith("wav") ||
-        input.endsWith("flac")
-    );
     if (
       !(input.endsWith("ogg") ||
       input.endsWith("mp3") ||
@@ -46,11 +40,23 @@ async function getLinks(msg, url, voiceChannel) {
     info.duration = Math.round(m.format.duration)
     // eslint-disable-line no-await-in-loop
     await handleVideo(info, msg, voiceChannel); // eslint-disable-line no-await-in-loop
+  } else if ((url.endsWith("ogg") ||
+      url.endsWith("mp3") ||
+      url.endsWith("wav") ||
+      url.endsWith("flac")) && url.startsWith("https://")) {
+    let info = []
+    let m = await readFileMetadata(url)
+    info.id = url.split('/')[url.split("/").length -1].split(".")[0];
+    info.title = m.common.title?m.common.title:url.split("/")[url.split("/").length -1].split(".")[0];
+    info.murl = url;
+    info.streamlink = url;
+    info.duration = Math.round(m.format.duration)
+    // eslint-disable-line no-await-in-loop
+    await handleVideo(info, msg, voiceChannel); // eslint-disable-line no-await-in-loop
   } else if (url.includes("soundcloud.com")) {
     soundcloud(msg, url, voiceChannel);
   } else if (url.includes("audius.co")) {
     audius(msg, url, voiceChannel);
-  } else if (url.includes("mp3")) {
   } else if (
     url.match(/^https?:\/\/(www.youtube.com|youtube.com)\/playlist(.*)$/)
   ) {
