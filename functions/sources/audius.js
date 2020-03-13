@@ -70,17 +70,11 @@ async function audius(msg, url, voiceChannel) {
     if (link.slice(0, -1) === "/") {
       link = link.slice(0, -1);
     }
-    let username = link.replace("https://audius.co/", "").split("/")[0];
-    let slugpre = decodeURIComponent(link)
-      .replace("https://audius.co/", "")
-      .split("/")[1]
-      .split("-");
-    slugpre.pop();
-    let slug = slugpre.join("-");
-    let id = link
-      .replace("https://audius.co/", "")
-      .split("-")
-      .pop();
+    let username = link.replace("https://audius.co/", "").split("/")[0]
+    let slugpre = link.replace("https://audius.co/", "").split("/")[1].split('-')
+    slugpre.pop()
+    let slug = slugpre.join("-")
+    let id = link.replace("https://audius.co/", "").split("-").pop()
     console.log(id, slug, username);
     let options = {
       method: "POST",
@@ -89,7 +83,7 @@ async function audius(msg, url, voiceChannel) {
       body: {
         tracks: [
           {
-            id: id,
+            id: parseInt(id),
             url_title: slug,
             handle: username
           }
@@ -107,6 +101,11 @@ async function audius(msg, url, voiceChannel) {
 
       let e = body;
       let info = [];
+      console.log({
+            id: parseInt(id),
+            url_title: slug,
+            handle: username
+          })
       info.id = id;
       info.title = `${e.data[0].title}・${username}`;
       info.murl = `https://kanbot-api.glitch.me/api/audius/generate.m3u8?id=${id}&title=${encodeURIComponent(
