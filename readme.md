@@ -28,6 +28,8 @@ http://awake.glitch.me/
 
 note: the url you put in is your whole url (ex: https://audius-music.glitch.me)
 
+**remember to fill out the .env file**
+
 ### mit licence
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
