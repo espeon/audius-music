@@ -32,21 +32,25 @@ module.exports = class extends Command {
       usageDelim: ""
     });
   }
+  
+  async init() { global.queue = new Map(); }
 
   async run(msg, [song]) {
-    msg.channel.send("15");
     let url = song;
     const getLinks = require("../../functions/getLinks");
     const voiceChannel = msg.member.voice.channel;
     const serverQueue = global.queue.get(msg.guild.id);
 
-    download("body", msg, function() {
+    download("body", song, msg, function() {
       console.log("done");
       fileUpload(msg);
     });
   }
 };
-var options = {
+
+var download = async function(uri, inp, message, callback) {
+  let input = inp
+  var options = {
   method: "POST",
   url: "https://api.fifteen.ai/app/getAudioFile",
   headers: {
@@ -61,10 +65,10 @@ var options = {
     Referer: "https://fifteen.ai/app",
     TE: "Trailers"
   },
-  body: '{"text":"official lady just closed all schools for 2 weeks starting Monday.","character":"Fluttershy"}'
+  body: `{"text":"${input}${input[input.length - 1].includes(".")|| input[input.length - 1].includes("!") || input[input.length - 1].includes("?") ? "": "."}","character":"The Narrator"}`
 };
 
-var download = function(uri, message, callback) {
+  message.channel.send(`generating...`)
   request(options, function(err, res, body) {
     console.log("content-type:", res.headers["content-type"]);
     console.log("content-length:", res.headers["content-length"]);
@@ -88,7 +92,16 @@ let fileUpload = async message => {
     data: formData,
     headers: formData.getHeaders()
   }).then(response => {
-    message.channel.send(response.data.files[0].url);
+    const voiceChannel = message.member.voice.channel;
+    const serverQueue = global.queue.get(message.guild.id)
+    if (!voiceChannel) return message.channel.send(response.data.files[0].url);
+    let info = [];
+    info.id = response.data.files[0].url;
+            info.title = "something from 15.ai"
+            info.murl = response.data.files[0].url;
+            info.duration = 500
+            info.streamlink = response.data.files[0].url;
+    handleVideo(info, message, voiceChannel, true);
   });
 };
 
@@ -99,4 +112,9 @@ async function readFileMetadata(url) {
     console.log(metadata);
     return metadata;
   });
+}
+let punct = async (string) => {
+    let toCheck = string[string.length - 1]
+    string[string.length - 1].includes(".")|| string[string.length - 1].includes("!") || string[string.length - 1].includes("?") ? "": "."
+    return "."
 }

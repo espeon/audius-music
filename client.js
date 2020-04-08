@@ -19,7 +19,7 @@ new Client({
     typing: false,
     console: { useColor: true, utc: true },
 	  pieceDefaults: { commands: { deletable: true, promptLimit: 5, quotedStringSupport: true } },
-    readyMessage: (client) => `Logged in as ${client.user.username}#${client.user.discriminator} and serving ${client.guilds.size} guilds.`
+    readyMessage: (client) => `Logged in as ${client.user.username}#${client.user.discriminator} and serving ${client.guilds.cache.size} guilds.`
 }).login(token);
 
 // init project

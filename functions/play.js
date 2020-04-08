@@ -19,7 +19,7 @@ async function play(guild, songe, bot) {
         bitrate: serverQueue.bitrate,
         passes: 2
       })
-      .on("end", reason => {
+      .on("finish", reason => {
         if (reason === "Stream is not generating quickly enough.")
           console.log("Song ended.")
         else console.log(reason)
@@ -29,6 +29,7 @@ async function play(guild, songe, bot) {
       .on("error", error => console.error(error))
     dispatcher.setVolumeLogarithmic(serverQueue.volume / 100)
   } else {
+    console.log(song.url)
     const dispatcher = serverQueue.connection
       .play(song.url, {
         volume: 0.5,
@@ -37,7 +38,7 @@ async function play(guild, songe, bot) {
         highWaterMark: 512,
         fec:true
       })
-      .on("end", reason => {
+      .on("finish", reason => {
         if (reason === "Stream is not generating quickly enough.")
           console.log("Song ended.")
         else console.log(reason)

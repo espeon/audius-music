@@ -37,7 +37,7 @@ module.exports = class extends Command {
       serverQueue.voiceChannel.leave();
       return msg.channel.send(`There isn't anything playing!`);
     }
-    leaveVC(serverQueue, serverQueue.textChannel.guild, false);
+    leaveVC(serverQueue, msg.guild, false);
     return;
     }
   };

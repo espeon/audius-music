@@ -1,14 +1,14 @@
 dependencies:
-  '@discordjs/opus': github.com/discordjs/opus/1de32e180f9d44fc0d34d7436224d90d11e355f2
+  '@discordjs/opus': github.com/discordjs/opus/29340061f13e81116f69dad46649771b602e6ad0
   axios: 0.19.2
   catbox.js: 0.0.1
-  discord.js: github.com/discordjs/discord.js/fe7df708e44e0280dfaf0f8e457b154781bb5140
+  discord.js: github.com/discordjs/discord.js/828640ca263db2c95ed21e7353a2746fe6ac9fb8
   dotenv: 8.2.0
   express: 4.17.1
   form-data: 3.0.0
-  klasa: github.com/dirigeants/klasa/aee79a51a6e845b6678e96fdd1a7cc1e27fda435
+  klasa: github.com/dirigeants/klasa/7fbd351c1276a171fdc854bc99f05b5ef89eb32b
   m3u8-parser: 4.4.2
-  music-metadata: 6.3.3
+  music-metadata: 6.3.7
   request: 2.88.2
   simple-youtube-api: 5.2.1
   sodium: 3.0.2
@@ -21,16 +21,10 @@ packages:
     dev: false
     resolution:
       integrity: sha512-neAp3zt80trRVBI1x0azq6c57aNBqYZH8KhMm3TaB7wEI5Q4A2SHfBHE8w9gOhI/lrqxtEbXZgQIrHP+wvSGwQ==
-  /@discordjs/collection/0.1.4:
+  /@discordjs/collection/0.1.5:
     dev: false
     resolution:
-      integrity: sha512-AwCjNahVqASGv5mxnZCC0DfcV/hkAV/U7edUB0K+20xx7v0ZfQ3/o02bNROzpNjvfak5pM8KO5SCmJVK90e3lQ==
-  /@klasa/request-handler/0.0.3:
-    dev: false
-    engines:
-      node: '>=10.1.0'
-    resolution:
-      integrity: sha512-Z1O+Aa2kW/I4Uos4EZalByveIuQKRfuRx+JCsgsogDBd95N5Ub47AH+LEd5i+uzjnJ6iDHfodpVlaHojJ4Q+ZQ==
+      integrity: sha512-CU1q0UXQUpFNzNB7gufgoisDHP7n+T3tkqTsp3MNUkVJ5+hS3BCvME8uCXAUFlz+6T2FbTCu75A+yQ7HMKqRKw==
   /@tokenizer/token/0.1.1:
     dev: false
     resolution:
@@ -418,17 +412,17 @@ packages:
     dev: false
     resolution:
       integrity: sha512-lhd/wF+Lk98HZoTCtlVraHtfh5XYijIjalXck7saUtuanSDyLMxnHhSXEDJqHxD7msR8D0uCmqlkwjCV8xvwHw==
-  /file-type/13.1.2:
+  /file-type/14.1.4:
     dependencies:
       readable-web-to-node-stream: 2.0.0
-      strtok3: 5.0.2
+      strtok3: 6.0.0
       token-types: 2.0.0
       typedarray-to-buffer: 3.1.5
     dev: false
     engines:
       node: '>=8'
     resolution:
-      integrity: sha512-NiHXbmclwHN38eHZfRklosbm7/W+1yacDzRCyddd0NiyuJUArQDmzJ8GPSFJGl82+I59u7sNGfcAVnJsfXJb8A==
+      integrity: sha512-1n6FczX8n73Y/cLjTiMboeTGHfm/i2AWk2oQE7m9a/G5YTCZHCEHEGr32thhLm3iQNUYzTKVQUcYcNHtOLwqgQ==
   /finalhandler/1.1.2:
     dependencies:
       debug: 2.6.9
@@ -523,7 +517,7 @@ packages:
       console-control-strings: 1.1.0
       has-unicode: 2.0.1
       object-assign: 4.1.1
-      signal-exit: 3.0.2
+      signal-exit: 3.0.3
       string-width: 1.0.2
       strip-ansi: 3.0.1
       wide-align: 1.1.3
@@ -792,14 +786,10 @@ packages:
     dev: false
     resolution:
       integrity: sha512-yJHVQEhyqPLUTgt9B83PXu6W3rx4MvvHvSUvToogpwoGDOUQ+yDrR0HRot+yOCdCO7u4hX3pWft6kWBBcqh0UA==
-  /minimist/0.0.8:
+  /minimist/1.2.5:
     dev: false
     resolution:
-      integrity: sha1-hX/Kv8M5fSYluCKCYuhqp6ARsF0=
-  /minimist/1.2.0:
-    dev: false
-    resolution:
-      integrity: sha1-o1AIsg9BOD7sH7kU9M1d95omQoQ=
+      integrity: sha512-FM9nNUYrRBAELZQT3xeZQ7fmMOBg6nWNmJKTcgsJeaLstP/UODVpGsr5OhXhhXg6f+qtJ8uiZ+PUxkDWcgIXLw==
   /minipass/2.9.0:
     dependencies:
       safe-buffer: 5.2.0
@@ -813,13 +803,13 @@ packages:
     dev: false
     resolution:
       integrity: sha512-6ZYMOEnmVsdCeTJVE0W9ZD+pVnE8h9Hma/iOwwRDsdQoePpoX56/8B6z3P9VNwppJuBKNRuFDRNRqRWexT9G9Q==
-  /mkdirp/0.5.1:
+  /mkdirp/0.5.5:
     dependencies:
-      minimist: 0.0.8
+      minimist: 1.2.5
     dev: false
     hasBin: true
     resolution:
-      integrity: sha1-MAV0OOrGz3+MR2fzhkjWaX11yQM=
+      integrity: sha512-NKmAlESf6jMGym1++R0Ra7wvhV+wFW63FaSOFPwRahvea0gMUcGUhVeAg/0BC0wiv9ih5NYPB1Wn1UEI1/L+xQ==
   /ms/2.0.0:
     dev: false
     resolution:
@@ -832,11 +822,11 @@ packages:
     dev: false
     resolution:
       integrity: sha512-sGkPx+VjMtmA6MX27oA4FBFELFCZZ4S4XqeGOXCv68tT+jb3vk/RyaKWP0PTKyWtmLSM0b+adUTEvbs1PEaH2w==
-  /music-metadata/6.3.3:
+  /music-metadata/6.3.7:
     dependencies:
       content-type: 1.0.4
       debug: 4.1.1
-      file-type: 13.1.2
+      file-type: 14.1.4
       media-typer: 1.1.0
       strtok3: 6.0.0
       token-types: 2.0.0
@@ -844,8 +834,8 @@ packages:
     engines:
       node: '>=8'
     resolution:
-      integrity: sha512-k922/Y/DqPYUpXfmygtsC2GQMDztciQOnDFN28Cn8mX+uuw+ccCazgWmpXoNTNnXRlYXuJD/NBE6kLJTUmlKKg==
-  /needle/2.3.2:
+      integrity: sha512-YKdEql/iJTxSlNEiPh2bxaS2DhZDluQGwc33K/IZQ68qIgJU1VyhU/Rwho7DQwpX2/7W6GudCpwfjTnDO6/WTQ==
+  /needle/2.4.1:
     dependencies:
       debug: 3.2.6
       iconv-lite: 0.4.24
@@ -855,7 +845,7 @@ packages:
       node: '>= 4.4.x'
     hasBin: true
     resolution:
-      integrity: sha512-DUzITvPVDUy6vczKKYTnWc/pBZ0EnjMJnQ3y+Jo5zfKFimJs7S3HFCxCRZYB9FUZcrzUQr3WsmvZgddMEIZv6w==
+      integrity: sha512-x/gi6ijr4B7fwl6WYL9FwlCvRQKGlUNvnceho8wxkwXqN8jvVmmmATTmZPRRG7b/yC1eode26C2HO9jl78Du9g==
   /negotiator/0.6.2:
     dev: false
     engines:
@@ -875,9 +865,9 @@ packages:
   /node-pre-gyp/0.14.0:
     dependencies:
       detect-libc: 1.0.3
-      mkdirp: 0.5.1
-      needle: 2.3.2
-      nopt: 4.0.1
+      mkdirp: 0.5.5
+      needle: 2.4.1
+      nopt: 4.0.3
       npm-packlist: 1.4.8
       npmlog: 4.1.2
       rc: 1.2.8
@@ -888,14 +878,14 @@ packages:
     hasBin: true
     resolution:
       integrity: sha512-+CvDC7ZttU/sSt9rFjix/P05iS43qHCOOGzcr3Ry99bXG7VX953+vFyEuph/tfqoYu8dttBkE86JSKBO2OzcxA==
-  /nopt/4.0.1:
+  /nopt/4.0.3:
     dependencies:
       abbrev: 1.1.1
       osenv: 0.1.5
     dev: false
     hasBin: true
     resolution:
-      integrity: sha1-0NRoWv1UFRk8jHUFYC0NF81kR00=
+      integrity: sha512-CvaGwVMztSMJLOeXPrez7fyfObdZqNUK1cPAEzLHrTybIua9pMdmmPR5YwtfNftIOMv3DPUhFaxsZMNTQO20Kg==
   /npm-bundled/1.1.1:
     dependencies:
       npm-normalize-package-bin: 1.0.1
@@ -998,7 +988,7 @@ packages:
     dev: false
     resolution:
       integrity: sha1-Ywn04OX6kT7BxpMHrjZLSzd8nns=
-  /prism-media/1.2.0:
+  /prism-media/1.2.1:
     dev: false
     peerDependencies:
       '@discordjs/opus': ^0.1.0
@@ -1006,7 +996,7 @@ packages:
       node-opus: ^0.3.1
       opusscript: ^0.0.6
     resolution:
-      integrity: sha512-zjcO/BLVlfxWqFpEUlDyL1R9XXMquasNP4xpeYDPPZi/Zcz0i6OXoqcvxOLgbRVPsJXVd29vlYmRx2bts+hzEw==
+      integrity: sha512-R3EbKwJiYlTvGwcG1DpUt+06DsxOGS5W4AMEHT7oVOjG93MjpdhGX1whHyjnqknylLMupKAsKMEXcTNRbPe6Vw==
   /process-nextick-args/2.0.1:
     dev: false
     resolution:
@@ -1075,7 +1065,7 @@ packages:
     dependencies:
       deep-extend: 0.6.0
       ini: 1.3.5
-      minimist: 1.2.0
+      minimist: 1.2.5
       strip-json-comments: 2.0.1
     dev: false
     hasBin: true
@@ -1200,10 +1190,10 @@ packages:
     dev: false
     resolution:
       integrity: sha512-JvdAWfbXeIGaZ9cILp38HntZSFSo3mWg6xGcJJsd+d4aRMOqauag1C63dJfDw7OaMYwEbHMOxEZ1lqVRYP2OAw==
-  /signal-exit/3.0.2:
+  /signal-exit/3.0.3:
     dev: false
     resolution:
-      integrity: sha1-tf3AjxKH6hF4Yo5BXiUTK3NkbG0=
+      integrity: sha512-VUJ49FC8U1OxwZLxIbTTrDvLnf/6TDgxZcK8wxR8zs13xpx7xbG60ndBlhNrFi2EMuFRoeDoJO7wthSLq42EjA==
   /simple-youtube-api/5.2.1:
     dependencies:
       iso8601-duration: 1.2.0
@@ -1294,16 +1284,6 @@ packages:
       node: '>=0.10.0'
     resolution:
       integrity: sha1-PFMZQukIwml8DsNEhYwobHygpgo=
-  /strtok3/5.0.2:
-    dependencies:
-      '@tokenizer/token': 0.1.1
-      debug: 4.1.1
-      peek-readable: 3.1.0
-    dev: false
-    engines:
-      node: '>=8'
-    resolution:
-      integrity: sha512-EFeVpFC5qDsqPEJSrIYyS/ueFBknGhgSK9cW+YAJF/cgJG/KSjoK7X6rK5xnpcLe7y1LVkVFCXWbAb+ClNKzKQ==
   /strtok3/6.0.0:
     dependencies:
       '@tokenizer/token': 0.1.1
@@ -1338,7 +1318,7 @@ packages:
       fs-minipass: 1.2.7
       minipass: 2.9.0
       minizlib: 1.3.3
-      mkdirp: 0.5.1
+      mkdirp: 0.5.5
       safe-buffer: 5.2.0
       yallist: 3.1.1
     dev: false
@@ -1456,7 +1436,7 @@ packages:
     dev: false
     resolution:
       integrity: sha1-tSQ9jz7BqjXxNkYFvA0QNuMKtp8=
-  /ws/7.2.1:
+  /ws/7.2.3:
     dev: false
     engines:
       node: '>=8.3.0'
@@ -1464,7 +1444,7 @@ packages:
       bufferutil: ^4.0.1
       utf-8-validate: ^5.0.2
     resolution:
-      integrity: sha512-sucePNSafamSKoOqoNfBd8V0StlkzJKL2ZAhGQinCfNQ+oacw+Pk7lcdAElecBF2VkLNZRiIb5Oi1Q5lVUVt2A==
+      integrity: sha512-HTDl9G9hbkNDk98naoR/cHDws7+EyYMOdL1BmjsZXRUjf7d+MficC4B7HLUPlSiho0vg+CWKrGIt/VJBd1xunQ==
   /yallist/3.1.1:
     dev: false
     resolution:
@@ -1480,9 +1460,8 @@ packages:
       node: '>=6'
     resolution:
       integrity: sha512-gECPN5g5JnSy8hIq11xHIGe1T/Xzy0mWxQin3zhlJ3nG/YjPcEVEejrdd2XmA4Vv2Zw3+b1ZyDjmt37XfZri6A==
-  github.com/dirigeants/klasa/aee79a51a6e845b6678e96fdd1a7cc1e27fda435:
+  github.com/dirigeants/klasa/7fbd351c1276a171fdc854bc99f05b5ef89eb32b:
     dependencies:
-      '@klasa/request-handler': 0.0.3
       fs-nextra: 0.4.7
     dev: false
     engines:
@@ -1492,34 +1471,34 @@ packages:
       discord.js: 'github:discordjs/discord.js#master'
     resolution:
       registry: 'https://registry.npmjs.org/'
-      tarball: 'https://codeload.github.com/dirigeants/klasa/tar.gz/aee79a51a6e845b6678e96fdd1a7cc1e27fda435'
+      tarball: 'https://codeload.github.com/dirigeants/klasa/tar.gz/7fbd351c1276a171fdc854bc99f05b5ef89eb32b'
     version: 0.5.0-dev
-  github.com/discordjs/discord.js/fe7df708e44e0280dfaf0f8e457b154781bb5140:
+  github.com/discordjs/discord.js/828640ca263db2c95ed21e7353a2746fe6ac9fb8:
     dependencies:
-      '@discordjs/collection': 0.1.4
+      '@discordjs/collection': 0.1.5
       abort-controller: 3.0.0
-      form-data: 2.5.1
+      form-data: 3.0.0
       node-fetch: 2.6.0
-      prism-media: 1.2.0
+      prism-media: 1.2.1
       setimmediate: 1.0.5
       tweetnacl: 1.0.3
-      ws: 7.2.1
+      ws: 7.2.3
     dev: false
     engines:
-      node: '>=10.2.0'
+      node: '>=12.0.0'
     name: discord.js
     peerDependencies:
       bufferutil: ^4.0.1
       erlpack: discordapp/erlpack
-      libsodium-wrappers: ^0.7.4
+      libsodium-wrappers: ^0.7.6
       sodium: ^3.0.2
       utf-8-validate: ^5.0.2
       zlib-sync: ^0.1.6
     resolution:
       registry: 'https://registry.npmjs.org/'
-      tarball: 'https://codeload.github.com/discordjs/discord.js/tar.gz/fe7df708e44e0280dfaf0f8e457b154781bb5140'
-    version: 12.0.0-dev
-  github.com/discordjs/opus/1de32e180f9d44fc0d34d7436224d90d11e355f2:
+      tarball: 'https://codeload.github.com/discordjs/discord.js/tar.gz/828640ca263db2c95ed21e7353a2746fe6ac9fb8'
+    version: 12.1.1
+  github.com/discordjs/opus/29340061f13e81116f69dad46649771b602e6ad0:
     dependencies:
       node-addon-api: 2.0.0
       node-pre-gyp: 0.14.0
@@ -1528,7 +1507,7 @@ packages:
     requiresBuild: true
     resolution:
       registry: 'https://registry.npmjs.org/'
-      tarball: 'https://codeload.github.com/discordjs/opus/tar.gz/1de32e180f9d44fc0d34d7436224d90d11e355f2'
+      tarball: 'https://codeload.github.com/discordjs/opus/tar.gz/29340061f13e81116f69dad46649771b602e6ad0'
     version: 0.1.0
 registry: 'https://registry.npmjs.org/'
 shrinkwrapMinorVersion: 9
@@ -1537,13 +1516,13 @@ specifiers:
   '@discordjs/opus': 'github:discordjs/opus'
   axios: ^0.19.2
   catbox.js: ^0.0.1
-  discord.js: 'github:discordjs/discord.js#fe7df708e44e0280dfaf0f8e457b154781bb5140'
+  discord.js: 'github:discordjs/discord.js'
   dotenv: ^8.2.0
   express: ^4.17.1
   form-data: ^3.0.0
-  klasa: 'github:dirigeants/klasa#settings'
+  klasa: 'github:dirigeants/klasa'
   m3u8-parser: ^4.4.2
-  music-metadata: ^6.3.3
+  music-metadata: ^6.3.5
   request: ^2.88.2
   simple-youtube-api: ^5.2.1
   sodium: ^3.0.2
