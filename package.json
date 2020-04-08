@@ -11,20 +11,20 @@
   "license": "MIT",
   "dependencies": {
     "@discordjs/opus": "github:discordjs/opus",
-    "discord.js": "github:discordjs/discord.js#fe7df708e44e0280dfaf0f8e457b154781bb5140",
+    "axios": "^0.19.2",
+    "catbox.js": "^0.0.1",
+    "discord.js": "github:discordjs/discord.js",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
-    "klasa": "github:dirigeants/klasa#settings",
-    "ytdl-core": "^1.0.7",
+    "form-data": "^3.0.0",
+    "klasa": "github:dirigeants/klasa",
+    "m3u8-parser": "^4.4.2",
+    "music-metadata": "^6.3.5",
     "request": "^2.88.2",
     "simple-youtube-api": "^5.2.1",
-    "m3u8-parser": "^4.4.2",
-    "music-metadata": "^6.3.3",
-    "axios": "^0.19.2",
-    "sodium": "^3.0.2",
-    "catbox.js": "^0.0.1",
     "spotify-web-api-node": "^4.0.0",
-    "form-data": "^3.0.0"
+    "ytdl-core": "^1.0.7",
+    "sodium": "^3.0.2"
   },
   "engines": {
     "node": "11"

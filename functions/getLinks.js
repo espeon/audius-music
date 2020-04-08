@@ -15,6 +15,7 @@ var mm = require("music-metadata");
 const discord = require("discord.js");
 
 async function getLinks(msg, url, voiceChannel) {
+  console.log(url)
   if (url == undefined && msg.attachments.array().length == 0)
     throw "you didn't tell me what to play!";
   if (msg.attachments.array().length !== 0 ) {
@@ -23,10 +24,10 @@ async function getLinks(msg, url, voiceChannel) {
     console.log(final)
     let input = final[0].proxyURL;
     if (
-      !(input.endsWith("ogg") ||
-      input.endsWith("mp3") ||
-      input.endsWith("wav") ||
-      input.endsWith("flac"))
+      !(input.includes(".ogg") ||
+      input.includes(".mp3") ||
+      input.includes(".wav") ||
+      input.includes(".flac"))
     )
       return msg.send(
         "That is not a valid file format! Supported formats can be found here => <https://www.npmjs.com/package/music-metadata>"
@@ -40,10 +41,11 @@ async function getLinks(msg, url, voiceChannel) {
     info.duration = Math.round(m.format.duration)
     // eslint-disable-line no-await-in-loop
     await handleVideo(info, msg, voiceChannel); // eslint-disable-line no-await-in-loop
-  } else if ((url.endsWith("ogg") ||
-      url.endsWith("mp3") ||
-      url.endsWith("wav") ||
-      url.endsWith("flac")) && url.startsWith("https://")) {
+  } else if ((url.includes(".ogg") ||
+      url.includes(".mp3") ||
+      url.includes(".wav") ||
+      url.includes(".m3u8") ||
+      url.includes(".flac")) && url.startsWith("http")) {
     let info = []
     let m = await readFileMetadata(url)
     info.id = url.split('/')[url.split("/").length -1].split(".")[0];

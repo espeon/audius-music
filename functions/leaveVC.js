@@ -3,7 +3,11 @@ module.exports = leaveVC;
 async function leave(serverQueue, guild) {
   if (!global.queue.get(guild.id)) {
         serverQueue.voiceChannel.leave()
-    return serverQueue.textChannel.send("bye!")
+    return serverQueue.textChannel.send("bye!").then(msg =>
+    setTimeout(function() {
+      msg.delete();
+    }, 18000)
+  );
   }
 }
 

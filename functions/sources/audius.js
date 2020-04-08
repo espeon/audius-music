@@ -3,7 +3,7 @@ const handleVideo = require("../../functions/handleVideo");
 const request = require("request");
 const findLengthOfm3u8 = require('../../functions/utils/findLengthOfm3u8')
 async function audius(msg, url, voiceChannel) {
-  if (url.includes("playlist")) {
+  if (url.includes("/playlist/") || url.includes("/album/")) {
     let id = url
       .replace("https://audius.co/", "")
       .split("-")
@@ -34,11 +34,13 @@ async function audius(msg, url, voiceChannel) {
         let info = [];
         info.id = id;
         info.title = q.title;
-        info.murl = `https://kanbot-api.glitch.me/api/audius/generate.m3u8?id=${
+        info.murl = `https://creatornode.linustek.repl.co/api/generate.m3u8?id=${
           q.track_id
         }&title=${q.route_id.split("/")[1]}&handle=${q.route_id.split("/")[0]}`;
+        console.log(info.murl)
         info.duration = await findLengthOfm3u8(info.murl);
-        info.streamlink = info.streamlink = `https://audius.co/${q.route_id}-${q.track_id}`;
+        info.streamlink = `https://audius.co/${q.route_id}-${q.track_id}`;
+        
         await handleVideo(info, msg, voiceChannel, true);
       }
     }
@@ -66,15 +68,16 @@ async function audius(msg, url, voiceChannel) {
       );
     });
   } else {
-    let link = url;
+    let link = decodeURIComponent(url.replace("https://audius.co/", ""));
+    console.log(url)
     if (link.slice(0, -1) === "/") {
       link = link.slice(0, -1);
     }
-    let username = link.replace("https://audius.co/", "").split("/")[0]
-    let slugpre = link.replace("https://audius.co/", "").split("/")[1].split('-')
+    let username = link.split("/")[0]
+    let slugpre = link.split("/")[1].split('-')
     slugpre.pop()
-    let slug = slugpre.join("-")
-    let id = link.replace("https://audius.co/", "").split("-").pop()
+    let slug = decodeURIComponent(slugpre.join("-"))
+    let id = link.split("-").pop()
     console.log(id, slug, username);
     let options = {
       method: "POST",
@@ -93,12 +96,12 @@ async function audius(msg, url, voiceChannel) {
     };
     request(options, async function(error, response, body) {
       // I don't even know how to switch this to axios - Bass
-      if (body.success != true) {
+      if (body.success != true || body.data.length === 0) {
         console.log(body);
         console.log(options.body);
         return msg.channel.send("This may not be a valid Audius link.");
       }
-
+      console.log(body.data.length)
       let e = body;
       let info = [];
       console.log({
@@ -108,7 +111,7 @@ async function audius(msg, url, voiceChannel) {
           })
       info.id = id;
       info.title = `${e.data[0].title}・${username}`;
-      info.murl = `https://kanbot-api.glitch.me/api/audius/generate.m3u8?id=${id}&title=${encodeURIComponent(
+      info.murl = `https://creatornode.linustek.repl.co/api/generate.m3u8?id=${id}&title=${encodeURIComponent(
         slug
       )}&handle=${encodeURIComponent(username)}`;
       info.streamlink = link;
