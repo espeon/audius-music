@@ -8,28 +8,6 @@ This bot's framework is based off of Klasa, which is licenced under MIT (found b
 
 To see what else we used, check out the `package.json` file.
 
-### how to use this
-
-1. make sure you have node.js (latest) and ffmpeg installed and added to PATH 
-
-2. run npm i
-
-3. run npm start
-
-**OR**
-
-clone this project on glitch here:
-
-https://glitch.com/edit/#!/remix/audius-music
-
-and keep it running here:
-
-http://awake.glitch.me/
-
-note: the url you put in is your whole url (ex: https://audius-music.glitch.me)
-
-**remember to fill out the .env file**
-
 ### mit licence
 
 Permission is hereby granted, free of charge, to any person obtaining a copy

@@ -109,9 +109,9 @@ async function audius(msg, url, voiceChannel) {
             url_title: slug,
             handle: username
           })
-      info.id = id;
+      info.id = parseInt(id)
       info.title = `${e.data[0].title}・${username}`;
-      info.murl = `https://creatornode.linustek.repl.co/api/generate.m3u8?id=${id}&title=${encodeURIComponent(
+      info.murl = `https://creatornode.linustek.repl.co/api/generate.m3u8?id=${info.id}&title=${encodeURIComponent(
         slug
       )}&handle=${encodeURIComponent(username)}`;
       info.streamlink = link;
