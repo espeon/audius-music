@@ -45,14 +45,23 @@ async function getLinks(msg, url, voiceChannel) {
       url.includes(".mp3") ||
       url.includes(".wav") ||
       url.includes(".m3u8") ||
-      url.includes(".flac")) && url.startsWith("http")) {
+      url.includes(".flac")) || url.includes("m3u8") && !url.endsWith("/") && !url.includes("//audius.co/") && url.startsWith("http")) {
+    let m;
+    let title;
+        if(url.includes("m3u8")){
+      m = findLengthOfm3u8(url)
+      title = url.split("/")[url.split("/").length -1].split(".")[0];
+    }else{
+      m = await readFileMetadata(url)
+      m = m.format.duration
+      title = m.common.title?m.common.title:url.split("/")[url.split("/").length -1].split(".")[0];
+    }
     let info = []
-    let m = await readFileMetadata(url)
     info.id = url.split('/')[url.split("/").length -1].split(".")[0];
-    info.title = m.common.title?m.common.title:url.split("/")[url.split("/").length -1].split(".")[0];
+    info.title = title
     info.murl = url;
     info.streamlink = url;
-    info.duration = Math.round(m.format.duration)
+    info.duration = Math.round(m)
     // eslint-disable-line no-await-in-loop
     await handleVideo(info, msg, voiceChannel); // eslint-disable-line no-await-in-loop
   } else if (url.includes("soundcloud.com")) {
