@@ -105,12 +105,13 @@ async function audius(msg, url, voiceChannel) {
       let e = body;
       console.log(body);
       let info = [];
+      if(body.data[0].is_delete) return msg.channel.send("This track has been deleted.")
       let legacy =
-        body.data[0].is_unlisted || body.data[0].is_delete || body.data[0].stem_of ? false : true;
-      console.log(body.data[0].is_unlisted, body.data[0].is_delete, body.data[0].stem_of)
+        body.data[0].is_unlisted || body.data[0].stem_of ? false : true;
+      console.log(body.data[0].is_unlisted, body.data[0].stem_of)
       console.log(
         "legacy",
-        body.data[0].is_unlisted || body.data[0].is_delete || body.data[0].stem_of
+        body.data[0].is_unlisted || body.data[0].stem_of
           ? "enabled"
           : "disabled"
       );
