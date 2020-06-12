@@ -4,9 +4,9 @@ const request = require("request");
 const findLengthOfm3u8 = require('../../functions/utils/findLengthOfm3u8')
 const {sckey} = process.env;
 async function soundcloud(msg, url, voiceChannel){
-  console.log(`https://creatornode.linustek.repl.co/api/sc/track?sc=${url}&v2=true`)
+  console.log(`https://kanbot-api.glitch.me/api/sc/track?sc=${url}&v2=true`)
   request(
-      `https://creatornode.linustek.repl.co/api/sc/track?sc=${url}&v2=true`,
+      `https://kanbot-api.glitch.me/api/sc/track?sc=${url}&v2=true`,
       function(error, response, body) {
         if (response.statusCode == 404) {
           console.log(response)
@@ -25,7 +25,7 @@ async function soundcloud(msg, url, voiceChannel){
             let info = [];
             info.id =
               "sc-" + soundcloud.id + soundcloud.media.transcodings[0].preset;
-            info.title = soundcloud.title + " by " + soundcloud.user.username;
+            info.title = soundcloud.title + "・" + soundcloud.user.username;
             info.murl = play.url;
             info.duration = await findLengthOfm3u8(info.murl);
             info.streamlink = url;

@@ -2,15 +2,16 @@ const { Command } = require("klasa");
 const {
   Permissions: { FLAGS }
 } = require("discord.js");
-var FormData = require("form-data");
+const FormData = require("form-data");
 
-var request = require("request");
+const request = require("request");
 const needle = require("needle");
 const axios = require("axios");
 const fs = require("fs");
-var mm = require("music-metadata");
+const mm = require("music-metadata");
 const handleVideo = require("../../functions/handleVideo");
 const findLengthOfm3u8 = require("../../functions/utils/findLengthOfm3u8");
+const getLinks = require("../../functions/getLinks");
 const { sckey } = process.env;
 
 module.exports = class extends Command {
@@ -32,9 +33,11 @@ module.exports = class extends Command {
       usageDelim: ""
     });
   }
-  
-  async init() { global.queue = new Map(); }
 
+  async init() {
+    global.queue = new Map();
+  }
+  
   async run(msg, [song]) {
     let url = song;
     const getLinks = require("../../functions/getLinks");
@@ -48,31 +51,37 @@ module.exports = class extends Command {
   }
 };
 
-var download = async function(uri, inp, message, callback) {
-  let input = inp
-  var options = {
-  method: "POST",
-  url: "https://api.fifteen.ai/app/getAudioFile",
-  headers: {
-    "User-Agent":
-      "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:74.0) Gecko/20100101 Firefox/74.0",
-    Accept: "application/json, text/plain, */*",
-    "Accept-Language": "en-GB,en;q=0.5",
-    "Content-Type": "application/json;charset=utf-8",
-    "Access-Control-Allow-Origin": "*",
-    Origin: "https://fifteen.ai",
-    Connection: "keep-alive",
-    Referer: "https://fifteen.ai/app",
-    TE: "Trailers"
-  },
-  body: `{"text":"${input}${input[input.length - 1].includes(".")|| input[input.length - 1].includes("!") || input[input.length - 1].includes("?") ? "": "."}","character":"The Narrator"}`
-};
+let download = async function(uri, inp, message, callback) {
+  let input = inp;
+  let options = {
+    method: "POST",
+    url: "https://api.fifteen.ai/app/getAudioFile",
+    headers: {
+      "User-Agent":
+        "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:74.0) Gecko/20100101 Firefox/74.0",
+      Accept: "application/json, text/plain, */*",
+      "Accept-Language": "en-GB,en;q=0.5",
+      "Content-Type": "application/json;charset=utf-8",
+      "Access-Control-Allow-Origin": "*",
+      Origin: "https://fifteen.ai",
+      Connection: "keep-alive",
+      Referer: "https://fifteen.ai/app",
+      TE: "Trailers"
+    },
+    body: `{"text":"${input}${
+      input[input.length - 1].includes(".") ||
+      input[input.length - 1].includes("!") ||
+      input[input.length - 1].includes("?")
+        ? ""
+        : "."
+    }","character":"The Narrator"}`
+  };
 
-  message.channel.send(`generating...`)
+  message.channel.send(`generating...`);
   request(options, function(err, res, body) {
     console.log("content-type:", res.headers["content-type"]);
     console.log("content-length:", res.headers["content-length"]);
-    if ((res.headers["content-length"] === 26)) {
+    if (res.headers["content-length"] === 26) {
       return message.channel.send(
         "Something went wrong, please try again or go to https://15.ai"
       );
@@ -93,14 +102,14 @@ let fileUpload = async message => {
     headers: formData.getHeaders()
   }).then(response => {
     const voiceChannel = message.member.voice.channel;
-    const serverQueue = global.queue.get(message.guild.id)
+    const serverQueue = global.queue.get(message.guild.id);
     if (!voiceChannel) return message.channel.send(response.data.files[0].url);
     let info = [];
     info.id = response.data.files[0].url;
-            info.title = "something from 15.ai"
-            info.murl = response.data.files[0].url;
-            info.duration = 500
-            info.streamlink = response.data.files[0].url;
+    info.title = "something from 15.ai";
+    info.murl = response.data.files[0].url;
+    info.duration = 500;
+    info.streamlink = response.data.files[0].url;
     handleVideo(info, message, voiceChannel, true);
   });
 };
@@ -112,9 +121,4 @@ async function readFileMetadata(url) {
     console.log(metadata);
     return metadata;
   });
-}
-let punct = async (string) => {
-    let toCheck = string[string.length - 1]
-    string[string.length - 1].includes(".")|| string[string.length - 1].includes("!") || string[string.length - 1].includes("?") ? "": "."
-    return "."
 }

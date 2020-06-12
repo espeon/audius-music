@@ -24,9 +24,10 @@
     "simple-youtube-api": "^5.2.1",
     "spotify-web-api-node": "^4.0.0",
     "ytdl-core": "^1.0.7",
-    "sodium": "^3.0.2"
+    "sodium": "^3.0.2",
+    "@audius/audius.js": "0.0.4"
   },
   "engines": {
-    "node": "11"
+    "node": "12"
   }
 }

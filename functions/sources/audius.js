@@ -1,7 +1,7 @@
 module.exports = audius;
 const handleVideo = require("../../functions/handleVideo");
 const request = require("request");
-const findLengthOfm3u8 = require('../../functions/utils/findLengthOfm3u8')
+const findLengthOfm3u8 = require("../../functions/utils/findLengthOfm3u8");
 async function audius(msg, url, voiceChannel) {
   if (url.includes("/playlist/") || url.includes("/album/")) {
     let id = url
@@ -20,7 +20,7 @@ async function audius(msg, url, voiceChannel) {
     async function b(list) {
       for (const id of list) {
         options = {
-          url: "https://discoveryprovider3.audius.co/tracks",
+          url: "https://discoveryprovider3.audius.co/tracks?with_users=true",
           qs: { id: id.track },
           headers: {
             Host: "discoveryprovider3.audius.co",
@@ -33,14 +33,14 @@ async function audius(msg, url, voiceChannel) {
         let q = await e(options);
         let info = [];
         info.id = id;
-        info.title = q.title;
-        info.murl = `https://creatornode.linustek.repl.co/api/generate.m3u8?id=${
+        info.title = `${q.title}・${q.user.name}`;
+        info.murl = `https://creatornode--linustek.repl.co/api/generate.m3u8?id=${
           q.track_id
         }&title=${q.route_id.split("/")[1]}&handle=${q.route_id.split("/")[0]}`;
-        console.log(info.murl)
+        console.log(info.murl);
         info.duration = await findLengthOfm3u8(info.murl);
         info.streamlink = `https://audius.co/${q.route_id}-${q.track_id}`;
-        
+
         await handleVideo(info, msg, voiceChannel, true);
       }
     }
@@ -69,19 +69,20 @@ async function audius(msg, url, voiceChannel) {
     });
   } else {
     let link = decodeURIComponent(url.replace("https://audius.co/", ""));
-    console.log(url)
+    console.log(url);
     if (link.slice(0, -1) === "/") {
       link = link.slice(0, -1);
     }
-    let username = link.split("/")[0]
-    let slugpre = link.split("/")[1].split('-')
-    slugpre.pop()
-    let slug = decodeURIComponent(slugpre.join("-"))
-    let id = link.split("-").pop()
+    let username = link.split("/")[0];
+    let slugpre = link.split("/")[1].split("-");
+    slugpre.pop();
+    let slug = decodeURIComponent(slugpre.join("-"));
+    let id = link.split("-").pop();
     console.log(id, slug, username);
     let options = {
       method: "POST",
-      url: "https://discoveryprovider2.audius.co/tracks_including_unlisted",
+      url:
+        "https://discoveryprovider2.audius.co/tracks_including_unlisted?with_users=true",
       headers: { "Content-Type": "application/json" },
       body: {
         tracks: [
@@ -101,21 +102,34 @@ async function audius(msg, url, voiceChannel) {
         console.log(options.body);
         return msg.channel.send("This may not be a valid Audius link.");
       }
-      console.log(body.data.length)
       let e = body;
+      console.log(body);
       let info = [];
+      let legacy =
+        body.data[0].is_unlisted || body.data[0].is_delete || body.data[0].stem_of ? false : true;
+      console.log(body.data[0].is_unlisted, body.data[0].is_delete, body.data[0].stem_of)
+      console.log(
+        "legacy",
+        body.data[0].is_unlisted || body.data[0].is_delete || body.data[0].stem_of
+          ? "enabled"
+          : "disabled"
+      );
       console.log({
-            id: parseInt(id),
-            url_title: slug,
-            handle: username
-          })
-      info.id = parseInt(id)
-      info.title = `${e.data[0].title}・${username}`;
-      info.murl = `https://creatornode.linustek.repl.co/api/generate.m3u8?id=${info.id}&title=${encodeURIComponent(
-        slug
-      )}&handle=${encodeURIComponent(username)}`;
+        id: parseInt(id),
+        url_title: slug,
+        handle: body.data[0].user.name
+      });
+      info.id = parseInt(id);
+      info.title = `${e.data[0].title}・${e.data[0].user.name}`;
+      info.murl = legacy
+        ? `audius://${info.id}`
+        : `https://creatornode--linustek.repl.co/api/generate.m3u8?id=${
+            info.id
+          }&title=${encodeURIComponent(slug)}&handle=${encodeURIComponent(
+            username
+          )}`;
       info.streamlink = link;
-      info.duration = await findLengthOfm3u8(info.murl);
+      info.duration = link;
       return handleVideo(info, msg, voiceChannel);
     });
   }
