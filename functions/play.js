@@ -21,7 +21,10 @@ async function play(guild, songe) {
   console.log(song);
   if (song.url.includes("youtube")) {
     const dispatcher = serverQueue.connection
-      .play(ytdl(song.url, { filter: "audioonly", highWaterMark: 1 << 25 }), {
+      .play(await ytdl(song.url, {
+              quality: 'highestaudio',
+              highWaterMark: 1024 * 1024 * 10
+            }), {
         volume: 0.5,
         bitrate: serverQueue.bitrate,
         passes: 2
