@@ -34,16 +34,18 @@ module.exports = class extends Command {
 			klasaVersion, discordVersion, process.version, message
 		));**/
     message.channel.send(
-      `>>> __Stats__\`\`\`css
-memory usage | ${mem.toFixed(2)}mb
-users        | ${this.client.users.size}
-channels     | ${this.client.channels.size}
-klasa        | ${klasaVersion}
-discord.js   | ${discordVersion}
-node.js      | ${process.version}
+      `>>> \`\`\`css
+__Stats__
+memory usage      | ${mem.toFixed(2)}mb
+users (cached)    | ${this.client.users.cache.size}
+channels (cached) | ${this.client.channels.cache.size}
+servers           | ${this.client.guilds.cache.size}
+klasa             | ${klasaVersion}
+discord.js        | ${discordVersion}
+node.js           | ${process.version}
 --------------------
-CPU          | ${os.cpus()[0].model.split('(R)').join('®')}
-OS           | ${os.type} ${os.release}\`\`\``
+CPU               | ${os.cpus()[0].model.split('(R)').join('®')}
+OS                | ${os.type} ${os.release}\`\`\``
     );
   }
 };

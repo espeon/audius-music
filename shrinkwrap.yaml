@@ -7,7 +7,7 @@ dependencies:
   dotenv: 8.2.0
   express: 4.17.1
   form-data: 3.0.0
-  klasa: github.com/dirigeants/klasa/7fbd351c1276a171fdc854bc99f05b5ef89eb32b
+  klasa: 0.5.0
   m3u8-parser: 4.4.2
   music-metadata: 6.3.7
   request: 2.88.2
@@ -2404,6 +2404,16 @@ packages:
     dev: false
     resolution:
       integrity: sha512-9ykJ/46SN/9KPM/sichzQ7OvXyGDYKGTaDlKMGCAlg2UK8KRy4jb0d8sFc+0Tt0YYnThq8X2RZgCg74RPxgcVA==
+  /klasa/0.5.0:
+    dependencies:
+      fs-nextra: 0.4.7
+    dev: false
+    engines:
+      node: '>=10.1.0'
+    peerDependencies:
+      discord.js: 'github:discordjs/discord.js#master'
+    resolution:
+      integrity: sha512-BrXP/rCvL7Sh4T3hnSOJTDbT5JT3Q3Di4sAg537OCzH/eRnYbeny4J99vkTGE5Lkm241HNH+kd+DURWaavBa6A==
   /libp2p-crypto-secp256k1/0.2.3:
     dependencies:
       async: 2.6.3
@@ -4864,19 +4874,6 @@ packages:
       registry: 'https://registry.npmjs.org/'
       tarball: 'https://codeload.github.com/dignifiedquire/webcrypto-shim/tar.gz/190bc9ec341375df6025b17ae12ddb2428ea49c8'
     version: 0.1.1
-  github.com/dirigeants/klasa/7fbd351c1276a171fdc854bc99f05b5ef89eb32b:
-    dependencies:
-      fs-nextra: 0.4.7
-    dev: false
-    engines:
-      node: '>=10.1.0'
-    name: klasa
-    peerDependencies:
-      discord.js: 'github:discordjs/discord.js#master'
-    resolution:
-      registry: 'https://registry.npmjs.org/'
-      tarball: 'https://codeload.github.com/dirigeants/klasa/tar.gz/7fbd351c1276a171fdc854bc99f05b5ef89eb32b'
-    version: 0.5.0-dev
   github.com/discordjs/discord.js/828640ca263db2c95ed21e7353a2746fe6ac9fb8:
     dependencies:
       '@discordjs/collection': 0.1.5
@@ -4925,7 +4922,7 @@ specifiers:
   dotenv: ^8.2.0
   express: ^4.17.1
   form-data: ^3.0.0
-  klasa: 'github:dirigeants/klasa'
+  klasa: 0.5.0
   m3u8-parser: ^4.4.2
   music-metadata: ^6.3.5
   request: ^2.88.2
