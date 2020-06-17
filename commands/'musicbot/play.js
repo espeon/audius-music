@@ -24,7 +24,8 @@ module.exports = class extends Command {
     this.exp = /^(?:https?:\/\/)?(?:www\.)?(?:youtube\.com\/\S*(?:(?:\/e(?:mbed)?)?\/|watch\/?\?(?:\S*?&?v=))|youtu\.be\/)([\w-]{11})(?:[^\w-]|$)/;
   }
 
-  async init() { global.queue = new Map(); }
+  async init() { global.queue = new Map(); 
+               global.client = this.c}
   
   async run(msg, [song]) {
       let url = song;

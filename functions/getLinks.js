@@ -47,13 +47,14 @@ async function getLinks(msg, url, voiceChannel) {
       url.includes(".m3u8") ||
       url.includes(".flac")) || url.includes("m3u8") && !url.endsWith("/") && !url.includes("//audius.co/") && url.startsWith("http")) {
     let m;
+    let t
     let title;
         if(url.includes("m3u8")){
-      m = findLengthOfm3u8(url)
+      t = findLengthOfm3u8(url)
       title = url.split("/")[url.split("/").length -1].split(".")[0];
     }else{
       m = await readFileMetadata(url)
-      m = m.format.duration
+      let t = m.format.duration
       title = m.common.title?m.common.title:url.split("/")[url.split("/").length -1].split(".")[0];
     }
     let info = []
@@ -61,7 +62,7 @@ async function getLinks(msg, url, voiceChannel) {
     info.title = title
     info.murl = url;
     info.streamlink = url;
-    info.duration = Math.round(m)
+    info.duration = Math.round(t)
     // eslint-disable-line no-await-in-loop
     await handleVideo(info, msg, voiceChannel); // eslint-disable-line no-await-in-loop
   } else if (url.includes("soundcloud.com")) {
