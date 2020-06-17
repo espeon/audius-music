@@ -108,7 +108,6 @@ async function audius(msg, url, voiceChannel) {
       if(body.data[0].is_delete) return msg.channel.send("This track has been deleted.")
       let legacy =
         body.data[0].is_unlisted || body.data[0].stem_of ? false : true;
-      console.log(body.data[0].is_unlisted, body.data[0].stem_of)
       console.log(
         "legacy",
         body.data[0].is_unlisted || body.data[0].stem_of

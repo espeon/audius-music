@@ -18,9 +18,7 @@ module.exports = class extends Command {
 	}
 
 	async run(msg, [code]) {
-        if (msg.author.id != 267121875765821440){
-            return msg.channel.send("bro u arent allowed to access this command")
-        }
+    
 		const flagTime = 'no-timeout' in msg.flags ? 'wait' in msg.flags ? Number(msg.flags.wait) : this.timeout : Infinity;
 		const language = msg.flags.lang || msg.flags.language || (msg.flags.json ? 'json' : 'js');
 		const { success, result, time, type } = await this.timedEval(msg, code, flagTime);

@@ -10,6 +10,7 @@ dependencies:
   klasa: 0.5.0
   m3u8-parser: 4.4.2
   music-metadata: 6.3.7
+  needle: 2.5.0
   request: 2.88.2
   simple-youtube-api: 5.2.1
   sodium: 3.0.2
@@ -2910,6 +2911,17 @@ packages:
     hasBin: true
     resolution:
       integrity: sha512-x/gi6ijr4B7fwl6WYL9FwlCvRQKGlUNvnceho8wxkwXqN8jvVmmmATTmZPRRG7b/yC1eode26C2HO9jl78Du9g==
+  /needle/2.5.0:
+    dependencies:
+      debug: 3.2.6
+      iconv-lite: 0.4.24
+      sax: 1.2.4
+    dev: false
+    engines:
+      node: '>= 4.4.x'
+    hasBin: true
+    resolution:
+      integrity: sha512-o/qITSDR0JCyCKEQ1/1bnUXMmznxabbwi/Y4WwJElf+evwJNFNwIDMCCt5IigFVxgeGBJESLohGtIS9gEzo1fA==
   /negotiator/0.6.2:
     dev: false
     engines:
@@ -4925,6 +4937,7 @@ specifiers:
   klasa: 0.5.0
   m3u8-parser: ^4.4.2
   music-metadata: ^6.3.5
+  needle: ^2.5.0
   request: ^2.88.2
   simple-youtube-api: ^5.2.1
   sodium: ^3.0.2
