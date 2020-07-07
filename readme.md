@@ -22,12 +22,6 @@ clone this project on glitch here:
 
 https://glitch.com/edit/#!/remix/audius-music
 
-and keep it running here:
-
-http://awake.glitch.me/
-
-note: the url you put in is your whole url (ex: https://audius-music.glitch.me)
-
 **remember to fill out the .env file**
 
 ### mit licence
