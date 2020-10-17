@@ -17,7 +17,6 @@ module.exports = class extends Command {
       requiredConfigs: [],
       description: 'Pauses music.',
       quotedStringSupport: true,
-      usage: '[song:string]',
       usageDelim: '',
     });
     this.exp = /^(?:https?:\/\/)?(?:www\.)?(?:youtube\.com\/\S*(?:(?:\/e(?:mbed)?)?\/|watch\/?\?(?:\S*?&?v=))|youtu\.be\/)([\w-]{11})(?:[^\w-]|$)/;

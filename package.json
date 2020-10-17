@@ -10,6 +10,7 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
+    "@audius/audius.js": "0.0.4",
     "@discordjs/opus": "github:discordjs/opus",
     "axios": "^0.19.2",
     "catbox.js": "^0.0.1",
@@ -17,19 +18,16 @@
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "form-data": "^3.0.0",
+    "hashids": "^2.2.1",
     "klasa": "0.5.0",
     "m3u8-parser": "^4.4.2",
     "music-metadata": "^6.3.5",
+    "needle": "^2.5.0",
     "request": "^2.88.2",
     "simple-youtube-api": "^5.2.1",
+    "sodium": "^3.0.2",
     "spotify-web-api-node": "^4.0.0",
     "ytdl-core": "^3.1.1",
-    "sodium": "^3.0.2",
-    "@audius/audius.js": "0.0.4",
-    "ytdl-core-discord": "^1.2.0",
-    "needle": "^2.5.0"
-  },
-  "engines": {
-    "node": "12"
+    "ytdl-core-discord": "^1.2.0"
   }
 }

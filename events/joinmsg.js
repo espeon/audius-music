@@ -8,7 +8,7 @@ module.exports = class extends Event {
 
 	run(guild) {
 		if (!guild.available) return;
-    this.client.channels.cache.get(guild.systemChannelID).send("hey 🏄‍♀️🌊👋\nif you need help, do "+ process.env.prefix + "help.")
+    this.client.channels.cache.get(guild.systemChannelID).send("hey 🏄‍♀️🌊👋🎧🎵\nif you ever need help with anything relating to me, please do `"+ process.env.prefix + "help`.")
 	}
 
 };

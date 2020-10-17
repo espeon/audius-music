@@ -17,7 +17,7 @@ module.exports = class extends Command {
       requiredConfigs: [],
       description: "Sets or displays the bitrate the bot is streaming at.",
       quotedStringSupport: true,
-      usage: "[args:string]",
+      usage: "[bitrate:int]",
       usageDelim: ""
     });
     this.exp = /^(?:https?:\/\/)?(?:www\.)?(?:youtube\.com\/\S*(?:(?:\/e(?:mbed)?)?\/|watch\/?\?(?:\S*?&?v=))|youtu\.be\/)([\w-]{11})(?:[^\w-]|$)/;
