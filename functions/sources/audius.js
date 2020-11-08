@@ -83,16 +83,6 @@ async function audius(msg, url, voiceChannel) {
     let options = {
       url:
         `https://discoveryprovider2.audius.co/v1/full/tracks/${encodeHashId(parseInt(id))}?url_title=${slug}&handle=${username}&show_unlisted=true`,
-      headers: { "Content-Type": "application/json" },
-      body: {
-        tracks: [
-          {
-            id: parseInt(id),
-            url_title: slug,
-            handle: username
-          }
-        ]
-      },
       json: true
     };
     request(options, async function(error, response, body) {
