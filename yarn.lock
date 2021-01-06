@@ -464,12 +464,19 @@ axios-retry@^3.0.2:
   dependencies:
     is-retry-allowed "^1.1.0"
 
-axios@^0.19.0, axios@^0.19.2:
+axios@^0.19.0:
   version "0.19.2"
   resolved "https://registry.yarnpkg.com/axios/-/axios-0.19.2.tgz#3ea36c5d8818d0d5f8a8a97a6d36b86cdc00cb27"
   integrity sha512-fjgm5MvRHLhx+osE2xoekY70AhARk3a6hkN+3Io1jc00jtquGvxYlKlsFUhmUET0V5te6CcZI7lcv2Ym61mjHA==
   dependencies:
     follow-redirects "1.5.10"
+
+axios@^0.21.1:
+  version "0.21.1"
+  resolved "https://registry.yarnpkg.com/axios/-/axios-0.21.1.tgz#22563481962f4d6bde9a76d516ef0e5d3c09b2b8"
+  integrity sha512-dKQiRHxGD9PPRIUNIWvZhPTPpl1rf/OxTYKsqKUDjBwYylTvV7SjSHJb9ratfyzM6wCdLCOYLzs73qpg5c4iGA==
+  dependencies:
+    follow-redirects "^1.10.0"
 
 balanced-match@^1.0.0:
   version "1.0.0"
@@ -1673,6 +1680,11 @@ follow-redirects@1.5.10:
   integrity sha512-0V5l4Cizzvqt5D44aTXbFZz+FtyXV1vrDN6qrelxtfYQKW0KO0W2T/hkE8xvGa/540LkZlkaUjO4ailYTFtHVQ==
   dependencies:
     debug "=3.1.0"
+
+follow-redirects@^1.10.0:
+  version "1.13.1"
+  resolved "https://registry.yarnpkg.com/follow-redirects/-/follow-redirects-1.13.1.tgz#5f69b813376cee4fd0474a3aba835df04ab763b7"
+  integrity sha512-SSG5xmZh1mkPGyKzjZP8zLjltIfpW32Y5QpdNJyjcfGxK3qo3NDDkZOZSFiGn1A6SclQxY9GzEwAHQ3dmYRWpg==
 
 forever-agent@~0.6.1:
   version "0.6.1"
@@ -4943,10 +4955,20 @@ ytdl-core-discord@^1.2.0:
     prism-media "^1.2.2"
     ytdl-core "^3.2.2"
 
-ytdl-core@^3.1.1, ytdl-core@^3.2.2:
+ytdl-core@^3.2.2:
   version "3.4.1"
   resolved "https://registry.yarnpkg.com/ytdl-core/-/ytdl-core-3.4.1.tgz#8f1ba8d301320e5d6f6052acd54eddee99403b22"
   integrity sha512-eiGprr+w0Uo9no7FdeQja8JySnvBb3M9eV0m+sq37L5+d7YyQZ+xkP+I5yzuw5s2FWnBv5jMnoZmBZLPJmAKbg==
+  dependencies:
+    html-entities "^1.3.1"
+    m3u8stream "^0.7.1"
+    miniget "^2.0.1"
+    sax "^1.1.3"
+
+ytdl-core@^3.4.2:
+  version "3.4.2"
+  resolved "https://registry.yarnpkg.com/ytdl-core/-/ytdl-core-3.4.2.tgz#0d3d35f54d4f6b1de870b987f3d45e88c64b6a6c"
+  integrity sha512-R6m1XZQK+iXxb9Q9Wo14/K8mti1r4HnKv4zKrbp5FvMG/jDbeV0xQHUHqqDLk+uiDy/VU6fVATm5x2ms0QaF5w==
   dependencies:
     html-entities "^1.3.1"
     m3u8stream "^0.7.1"

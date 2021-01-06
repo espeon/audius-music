@@ -12,7 +12,7 @@
   "dependencies": {
     "@audius/audius.js": "0.0.4",
     "@discordjs/opus": "github:discordjs/opus",
-    "axios": "^0.19.2",
+    "axios": "^0.21.1",
     "catbox.js": "^0.0.1",
     "discord.js": "github:discordjs/discord.js",
     "dotenv": "^8.2.0",
