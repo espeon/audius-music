@@ -3,6 +3,7 @@ const handleVideo = require("../../functions/handleVideo");
 const request = require("request");
 const findLengthOfm3u8 = require("../../functions/utils/findLengthOfm3u8");
 async function audius(msg, url, voiceChannel) {
+  msg.replace("--","%2D-");
   if (url.includes("/playlist/") || url.includes("/album/")) {
     let id = url
       .replace("https://audius.co/", "")
@@ -82,7 +83,7 @@ async function audius(msg, url, voiceChannel) {
     console.log(id, slug, username);
     let options = {
       url:
-        `https://discoveryprovider2.audius.co/v1/full/tracks/${encodeHashId(parseInt(id))}?url_title=${slug}&handle=${username}&show_unlisted=true`,
+        `https://discoveryprovider.audius.co/v1/full/tracks/${encodeHashId(parseInt(id))}?url_title=${slug}&handle=${username}&show_unlisted=true`,
       json: true
     };
     request(options, async function(error, response, body) {
@@ -114,7 +115,7 @@ async function audius(msg, url, voiceChannel) {
             username
           )}`;
       info.streamlink = link;
-      info.duration = link;
+      info.duration = body.data.duration;
       return handleVideo(info, msg, voiceChannel);
     });
   }
