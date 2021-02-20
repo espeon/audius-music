@@ -3,7 +3,7 @@ const handleVideo = require("../../functions/handleVideo");
 const request = require("request");
 const findLengthOfm3u8 = require("../../functions/utils/findLengthOfm3u8");
 async function audius(msg, url, voiceChannel) {
-  msg.replace("--","%2D-");
+  url.replace("--","%2D-");
   if (url.includes("/playlist/") || url.includes("/album/")) {
     let id = url
       .replace("https://audius.co/", "")
